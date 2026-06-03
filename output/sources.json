@@ -1,16 +1,16 @@
 {
-  "synced_at": "2026-06-03 04:04:11 UTC",
-  "v2ray_total_nodes": 1512,
+  "synced_at": "2026-06-03 04:16:06 UTC",
+  "v2ray_total_nodes": 739,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
     "timeout_secs": 3,
     "concurrency": 50,
     "v2ray": {
-      "before": 1970,
-      "after": 1512,
-      "reachable": 1067,
-      "unreachable": 458,
+      "before": 1977,
+      "after": 1515,
+      "reachable": 1070,
+      "unreachable": 462,
       "unparsed": 445
     },
     "clash": {
@@ -28,27 +28,27 @@
       "format": "v2ray",
       "resolved_url": "https://github.com/Au1rxx/free-vpn-subscriptions/raw/main/output/v2ray-base64.txt",
       "ok": true,
-      "node_count": 91,
+      "node_count": 98,
       "protocols": [
         [
           "ss",
-          14
-        ],
-        [
-          "trojan",
-          34
-        ],
-        [
-          "vless",
           21
         ],
         [
+          "trojan",
+          33
+        ],
+        [
+          "vless",
+          17
+        ],
+        [
           "vmess",
-          22
+          27
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-03 04:03:41 UTC"
+      "fetched_at": "2026-06-03 04:15:41 UTC"
     },
     {
       "name": "DaBao-Lee",
@@ -76,7 +76,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-03 04:03:41 UTC"
+      "fetched_at": "2026-06-03 04:15:42 UTC"
     },
     {
       "name": "ripaojiedian",
@@ -100,7 +100,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-03 04:03:41 UTC"
+      "fetched_at": "2026-06-03 04:15:42 UTC"
     },
     {
       "name": "runfacishan",
@@ -111,7 +111,7 @@
       "node_count": 0,
       "protocols": [],
       "error": "HTTP 404 Not Found for https://d.zrf.me/vless-base64",
-      "fetched_at": "2026-06-03 04:03:41 UTC"
+      "fetched_at": "2026-06-03 04:15:42 UTC"
     },
     {
       "name": "chengaopan",
@@ -143,7 +143,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-03 04:03:47 UTC"
+      "fetched_at": "2026-06-03 04:15:46 UTC"
     },
     {
       "name": "xrayvip-v2ray",
@@ -167,7 +167,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-03 04:03:47 UTC"
+      "fetched_at": "2026-06-03 04:15:46 UTC"
     },
     {
       "name": "free-nodes",
@@ -199,7 +199,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-03 04:03:47 UTC"
+      "fetched_at": "2026-06-03 04:15:47 UTC"
     },
     {
       "name": "nodev2rayn",
@@ -227,7 +227,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-03 04:03:47 UTC"
+      "fetched_at": "2026-06-03 04:15:47 UTC"
     },
     {
       "name": "xrayvip-clash",
@@ -238,7 +238,7 @@
       "node_count": 5,
       "protocols": [],
       "error": null,
-      "fetched_at": "2026-06-03 04:03:47 UTC"
+      "fetched_at": "2026-06-03 04:15:47 UTC"
     },
     {
       "name": "mfuu-clash",
@@ -249,7 +249,7 @@
       "node_count": 0,
       "protocols": [],
       "error": null,
-      "fetched_at": "2026-06-03 04:03:47 UTC"
+      "fetched_at": "2026-06-03 04:15:47 UTC"
     },
     {
       "name": "anaer-clash",
@@ -260,7 +260,7 @@
       "node_count": 58,
       "protocols": [],
       "error": null,
-      "fetched_at": "2026-06-03 04:03:47 UTC"
+      "fetched_at": "2026-06-03 04:15:47 UTC"
     }
   ]
 }
