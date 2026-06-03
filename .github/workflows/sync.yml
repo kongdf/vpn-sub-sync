@@ -30,7 +30,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f output/v2ray.txt output/clash.yaml output/sources.json output/README.md
+          for f in output/v2ray.txt output/clash.yaml output/sources.json output/README.md; do
+            if [ -f "$f" ]; then
+              git add -f "$f"
+            fi
+          done
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
