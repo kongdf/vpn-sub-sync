@@ -1,0 +1,85 @@
+# 订阅源配置：增删源只需改此文件，无需改代码
+# kind: direct = 直链 | github_readme = 从仓库 README 解析订阅 URL
+
+[[source]]
+name = "Au1rxx"
+kind = "direct"
+url = "https://github.com/Au1rxx/free-vpn-subscriptions/raw/main/output/v2ray-base64.txt"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "DaBao-Lee"
+kind = "direct"
+url = "https://raw.githubusercontent.com/DaBao-Lee/V2RayN-NodeShare/main/base64"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "ripaojiedian"
+kind = "direct"
+url = "https://raw.githubusercontent.com/ripaojiedian/freenode/main/sub"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "runfacishan"
+kind = "direct"
+url = "https://d.zrf.me/vless-base64"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "chengaopan"
+kind = "direct"
+url = "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/master/list.txt"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "xrayvip-v2ray"
+kind = "direct"
+url = "https://www.xrayvip.com/free.txt"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "free-nodes"
+kind = "github_readme"
+repo = "free-nodes/v2rayfree"
+branch = "main"
+url_pattern = 'https://raw\.githubusercontent\.com/free-nodes/v2rayfree/main/v\d+'
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "nodev2rayn"
+kind = "github_readme"
+repo = "nodev2rayn/nodev2rayn.github.io"
+branch = "main"
+url_pattern = 'https://nodev2rayn\.github\.io/uploads/\d{4}/\d{2}/\d+-[\d]+\.txt'
+format = "v2ray"
+enabled = true
+
+# --- Clash 格式（可选）---
+
+[[source]]
+name = "xrayvip-clash"
+kind = "direct"
+url = "https://www.xrayvip.com/free.yaml"
+format = "clash"
+enabled = true
+
+[[source]]
+name = "mfuu-clash"
+kind = "direct"
+url = "https://raw.githubusercontent.com/mfuu/v2ray/master/clash.yaml"
+format = "clash"
+enabled = true
+
+[[source]]
+name = "anaer-clash"
+kind = "direct"
+url = "https://raw.githubusercontent.com/anaer/Sub/main/clash.yaml"
+format = "clash"
+enabled = true
