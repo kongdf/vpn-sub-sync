@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
 use crate::probe::{extract_clash_endpoint, extract_v2ray_endpoint, ProbeCache, ProbeResult};
+use crate::tag::TaggedNode;
 
 fn node_endpoint(node: &str) -> Option<(String, u16)> {
     extract_v2ray_endpoint(node).or_else(|| extract_clash_endpoint(node))
@@ -38,6 +39,19 @@ pub fn refine_v2ray_nodes(
     probe_cache: &ProbeCache,
     cfg: &FilterConfig,
 ) -> (Vec<String>, FilterStats) {
+    let tagged: Vec<TaggedNode> = nodes
+        .iter()
+        .map(|node| TaggedNode::new(node.clone(), ""))
+        .collect();
+    let (out, stats) = refine_v2ray_tagged(&tagged, probe_cache, cfg);
+    (out.into_iter().map(|t| t.node).collect(), stats)
+}
+
+pub fn refine_v2ray_tagged(
+    nodes: &[TaggedNode],
+    probe_cache: &ProbeCache,
+    cfg: &FilterConfig,
+) -> (Vec<TaggedNode>, FilterStats) {
     let mut stats = FilterStats {
         before: nodes.len(),
         ..Default::default()
@@ -50,25 +64,20 @@ pub fn refine_v2ray_nodes(
     let mut kept = nodes.to_vec();
 
     if cfg.drop_unparsed {
-        let before = kept.len();
-        kept.retain(|node| {
-            if node_endpoint(node).is_some() {
+        kept.retain(|tagged| {
+            if node_endpoint(&tagged.node).is_some() {
                 true
             } else {
                 stats.unparsed_dropped += 1;
                 false
             }
         });
-        stats.after = kept.len();
-        if kept.len() != before {
-            stats.before = stats.before; // keep original before
-        }
     }
 
     if cfg.max_latency_ms.is_some() {
         let max = cfg.max_latency_ms.unwrap();
-        kept.retain(|node| {
-            let Some(ep) = node_endpoint(node) else {
+        kept.retain(|tagged| {
+            let Some(ep) = node_endpoint(&tagged.node) else {
                 return true;
             };
             match probe_cache.get(&ep) {
@@ -91,13 +100,13 @@ pub fn refine_v2ray_nodes(
     }
 
     if cfg.dedupe_endpoint {
-        kept = dedupe_by_endpoint(kept, probe_cache, &mut stats);
+        kept = dedupe_tagged_by_endpoint(kept, probe_cache, &mut stats);
     }
 
     kept.sort_by(|a, b| {
-        endpoint_latency(a, probe_cache)
+        endpoint_latency(&a.node, probe_cache)
             .unwrap_or(u32::MAX)
-            .cmp(&endpoint_latency(b, probe_cache).unwrap_or(u32::MAX))
+            .cmp(&endpoint_latency(&b.node, probe_cache).unwrap_or(u32::MAX))
     });
 
     if let Some(max) = cfg.max_nodes {
@@ -116,62 +125,28 @@ pub fn refine_clash_chunks(
     probe_cache: &ProbeCache,
     cfg: &FilterConfig,
 ) -> (Vec<String>, FilterStats) {
-    let mut stats = FilterStats::default();
-    let mut out = Vec::new();
-
-    for chunk in chunks {
-        let Some(blocks) = crate::parser::extract_clash_proxy_blocks(chunk) else {
-            out.push(chunk.clone());
-            continue;
-        };
-
-        stats.before += blocks.len();
-        let (refined, block_stats) = refine_clash_blocks(&blocks, probe_cache, cfg);
-        merge_filter_stats(&mut stats, &block_stats);
-        stats.after += refined.len();
-
-        if !refined.is_empty() {
-            out.push(crate::parser::build_clash_proxies(&refined));
-        }
-    }
-
-    (out, stats)
+    let tagged: Vec<crate::tag::TaggedChunk> = chunks
+        .iter()
+        .map(|body| crate::tag::TaggedChunk::new(body.clone(), ""))
+        .collect();
+    let (out, stats) = refine_clash_tagged(&tagged, probe_cache, cfg);
+    (out.into_iter().map(|c| c.body).collect(), stats)
 }
 
-fn refine_clash_blocks(
-    blocks: &[String],
-    probe_cache: &ProbeCache,
-    cfg: &FilterConfig,
-) -> (Vec<String>, FilterStats) {
-    let mut stats = FilterStats {
-        before: blocks.len(),
-        ..Default::default()
-    };
-
-    let pseudo_nodes: Vec<String> = blocks.to_vec();
-    let (kept, node_stats) = refine_v2ray_nodes(&pseudo_nodes, probe_cache, cfg);
-    stats.deduped = node_stats.deduped;
-    stats.slow_dropped = node_stats.slow_dropped;
-    stats.unparsed_dropped = node_stats.unparsed_dropped;
-    stats.capped = node_stats.capped;
-    stats.after = kept.len();
-    (kept, stats)
-}
-
-fn dedupe_by_endpoint(
-    nodes: Vec<String>,
+fn dedupe_tagged_by_endpoint(
+    nodes: Vec<TaggedNode>,
     probe_cache: &ProbeCache,
     stats: &mut FilterStats,
-) -> Vec<String> {
+) -> Vec<TaggedNode> {
     let mut unparsed = Vec::new();
-    let mut best: HashMap<(String, u16), (String, u32)> = HashMap::new();
+    let mut best: HashMap<(String, u16), (TaggedNode, u32)> = HashMap::new();
 
-    for node in nodes {
-        let Some(ep) = node_endpoint(&node) else {
-            unparsed.push(node);
+    for tagged in nodes {
+        let Some(ep) = node_endpoint(&tagged.node) else {
+            unparsed.push(tagged);
             continue;
         };
-        let rank = endpoint_latency(&node, probe_cache).unwrap_or(u32::MAX);
+        let rank = endpoint_latency(&tagged.node, probe_cache).unwrap_or(u32::MAX);
 
         match best.get(&ep) {
             Some((_, existing)) if *existing <= rank => {
@@ -181,22 +156,57 @@ fn dedupe_by_endpoint(
                 if best.contains_key(&ep) {
                     stats.deduped += 1;
                 }
-                best.insert(ep, (node, rank));
+                best.insert(ep, (tagged, rank));
             }
         }
     }
 
-    let mut ranked: Vec<(String, u32)> = best.into_values().collect();
+    let mut ranked: Vec<(TaggedNode, u32)> = best.into_values().collect();
     ranked.sort_by_key(|(_, rank)| *rank);
 
     let mut out = unparsed;
-    out.extend(ranked.into_iter().map(|(node, _)| node));
+    out.extend(ranked.into_iter().map(|(tagged, _)| tagged));
     out
 }
 
 fn endpoint_latency(node: &str, probe_cache: &ProbeCache) -> Option<u32> {
     let ep = node_endpoint(node)?;
     probe_cache.get(&ep).and_then(|r| r.latency_ms)
+}
+
+pub fn refine_clash_tagged(
+    chunks: &[crate::tag::TaggedChunk],
+    probe_cache: &ProbeCache,
+    cfg: &FilterConfig,
+) -> (Vec<crate::tag::TaggedChunk>, FilterStats) {
+    let mut stats = FilterStats::default();
+    let mut out = Vec::new();
+
+    for chunk in chunks {
+        let Some(blocks) = crate::parser::extract_clash_proxy_blocks(&chunk.body) else {
+            out.push(chunk.clone());
+            continue;
+        };
+
+        stats.before += blocks.len();
+        let tagged_blocks: Vec<TaggedNode> = blocks
+            .into_iter()
+            .map(|block| TaggedNode::new(block, chunk.source.clone()))
+            .collect();
+        let (refined, block_stats) = refine_v2ray_tagged(&tagged_blocks, probe_cache, cfg);
+        merge_filter_stats(&mut stats, &block_stats);
+        stats.after += refined.len();
+
+        if !refined.is_empty() {
+            let blocks: Vec<String> = refined.into_iter().map(|t| t.node).collect();
+            out.push(crate::tag::TaggedChunk::new(
+                crate::parser::build_clash_proxies(&blocks),
+                chunk.source.clone(),
+            ));
+        }
+    }
+
+    (out, stats)
 }
 
 fn merge_filter_stats(total: &mut FilterStats, part: &FilterStats) {
@@ -210,6 +220,7 @@ fn merge_filter_stats(total: &mut FilterStats, part: &FilterStats) {
 mod tests {
     use super::*;
     use crate::probe::ProbeResult;
+    use crate::tag::TaggedNode;
 
     fn cache() -> ProbeCache {
         let mut c = ProbeCache::new();
@@ -262,5 +273,23 @@ mod tests {
         let (out, stats) = refine_v2ray_nodes(&nodes, &cache(), &cfg);
         assert_eq!(out.len(), 1);
         assert_eq!(stats.slow_dropped, 1);
+    }
+
+    #[test]
+    fn dedup_preserves_first_source() {
+        let nodes = vec![
+            TaggedNode::new("vless://a@1.1.1.1:443#n1".into(), "Au1rxx"),
+            TaggedNode::new("vless://b@1.1.1.1:443#n2".into(), "DaBao-Lee"),
+        ];
+        let cfg = FilterConfig {
+            dedupe_endpoint: true,
+            max_latency_ms: None,
+            max_nodes: None,
+            drop_unparsed: false,
+        };
+        let (out, stats) = refine_v2ray_tagged(&nodes, &cache(), &cfg);
+        assert_eq!(out.len(), 1);
+        assert_eq!(stats.deduped, 1);
+        assert_eq!(out[0].source, "Au1rxx");
     }
 }

@@ -2,12 +2,48 @@ use std::collections::HashSet;
 
 use crate::country::detect_country;
 use crate::probe::{extract_clash_endpoint, extract_v2ray_endpoint, ProbeCache};
+use crate::tag::{TaggedChunk, TaggedNode};
 
 #[derive(Debug, Clone)]
 pub struct NamingConfig {
     pub enabled: bool,
     pub template: String,
     pub first_name: String,
+    pub tag_source: bool,
+}
+
+pub fn rename_v2ray_tagged(
+    nodes: &[TaggedNode],
+    cfg: &NamingConfig,
+    probe_cache: &ProbeCache,
+) -> Vec<TaggedNode> {
+    if !cfg.enabled {
+        if !cfg.tag_source {
+            return nodes.to_vec();
+        }
+        return nodes
+            .iter()
+            .map(|t| TaggedNode::new(tag_source_only(&t.node, &t.source), t.source.clone()))
+            .collect();
+    }
+
+    let mut used = HashSet::new();
+    nodes
+        .iter()
+        .enumerate()
+        .map(|(i, tagged)| {
+            let base = if i == 0 {
+                cfg.first_name.clone()
+            } else {
+                build_name(cfg, &tagged.node, &tagged.source, i + 1, probe_cache)
+            };
+            let name = unique_name(&mut used, base);
+            TaggedNode::new(
+                set_v2ray_display_name(&tagged.node, &name),
+                tagged.source.clone(),
+            )
+        })
+        .collect()
 }
 
 pub fn rename_v2ray_nodes(
@@ -15,40 +51,50 @@ pub fn rename_v2ray_nodes(
     cfg: &NamingConfig,
     probe_cache: &ProbeCache,
 ) -> Vec<String> {
-    if !cfg.enabled {
-        return nodes.to_vec();
-    }
-
-    let mut used = HashSet::new();
-    nodes
+    let tagged: Vec<TaggedNode> = nodes
         .iter()
-        .enumerate()
-        .map(|(i, node)| {
-            let base = if i == 0 {
-                cfg.first_name.clone()
-            } else {
-                build_name(cfg, node, i + 1, probe_cache)
-            };
-            let name = unique_name(&mut used, base);
-            set_v2ray_display_name(node, &name)
-        })
+        .map(|node| TaggedNode::new(node.clone(), ""))
+        .collect();
+    rename_v2ray_tagged(&tagged, cfg, probe_cache)
+        .into_iter()
+        .map(|t| t.node)
         .collect()
 }
 
-pub fn rename_clash_chunks(
-    chunks: &[String],
+pub fn rename_clash_tagged(
+    chunks: &[TaggedChunk],
     cfg: &NamingConfig,
     probe_cache: &ProbeCache,
-) -> Vec<String> {
+) -> Vec<TaggedChunk> {
     if !cfg.enabled {
-        return chunks.to_vec();
+        if !cfg.tag_source {
+            return chunks.to_vec();
+        }
+        return chunks
+            .iter()
+            .map(|chunk| {
+                let Some(blocks) = crate::parser::extract_clash_proxy_blocks(&chunk.body) else {
+                    return chunk.clone();
+                };
+                let renamed: Vec<String> = blocks
+                    .iter()
+                    .map(|block| {
+                        set_clash_display_name(block, &format!("{}-{}", chunk.source, extract_original_display_name(block).unwrap_or_else(|| "node".into())))
+                    })
+                    .collect();
+                TaggedChunk::new(
+                    crate::parser::build_clash_proxies(&renamed),
+                    chunk.source.clone(),
+                )
+            })
+            .collect();
     }
 
     let mut used = HashSet::new();
     let mut out = Vec::new();
 
     for chunk in chunks {
-        let Some(blocks) = crate::parser::extract_clash_proxy_blocks(chunk) else {
+        let Some(blocks) = crate::parser::extract_clash_proxy_blocks(&chunk.body) else {
             out.push(chunk.clone());
             continue;
         };
@@ -59,16 +105,86 @@ pub fn rename_clash_chunks(
             .map(|(i, block)| {
                 let name = unique_name(
                     &mut used,
-                    build_name(cfg, block, i + 1, probe_cache),
+                    build_name(cfg, block, &chunk.source, i + 1, probe_cache),
                 );
                 set_clash_display_name(block, &name)
             })
             .collect();
 
-        out.push(crate::parser::build_clash_proxies(&renamed));
+        out.push(TaggedChunk::new(
+            crate::parser::build_clash_proxies(&renamed),
+            chunk.source.clone(),
+        ));
     }
 
     out
+}
+
+pub fn rename_clash_chunks(
+    chunks: &[String],
+    cfg: &NamingConfig,
+    probe_cache: &ProbeCache,
+) -> Vec<String> {
+    let tagged: Vec<TaggedChunk> = chunks
+        .iter()
+        .map(|body| TaggedChunk::new(body.clone(), ""))
+        .collect();
+    rename_clash_tagged(&tagged, cfg, probe_cache)
+        .into_iter()
+        .map(|c| c.body)
+        .collect()
+}
+
+fn tag_source_only(node: &str, source: &str) -> String {
+    let label = if source.is_empty() { "unknown" } else { source };
+    let original = extract_original_display_name(node).unwrap_or_default();
+    let name = if original.is_empty() {
+        label.to_string()
+    } else {
+        format!("{label}-{original}")
+    };
+    set_v2ray_display_name(node, &name)
+}
+
+fn build_name(
+    cfg: &NamingConfig,
+    node: &str,
+    source: &str,
+    index: usize,
+    probe_cache: &ProbeCache,
+) -> String {
+    let hint = extract_original_display_name(node);
+    let (host, port) = extract_v2ray_endpoint(node)
+        .or_else(|| extract_clash_endpoint(node))
+        .unwrap_or_else(|| ("?".into(), 0));
+
+    let country = detect_country(&host, hint.as_deref());
+    let latency = format_latency(probe_cache.get(&(host.clone(), port)));
+    let proto = node_protocol(node);
+    let port_str = if port > 0 {
+        port.to_string()
+    } else {
+        "?".to_string()
+    };
+    let index_str = format!("{index:03}");
+    let source_label = if source.is_empty() {
+        "unknown".to_string()
+    } else {
+        source.to_string()
+    };
+
+    apply_template(
+        &cfg.template,
+        &[
+            ("source", &source_label),
+            ("country", &country),
+            ("latency", &latency),
+            ("proto", &proto),
+            ("host", &host),
+            ("port", &port_str),
+            ("index", &index_str),
+        ],
+    )
 }
 
 fn unique_name(used: &mut HashSet<String>, base: String) -> String {
@@ -84,35 +200,6 @@ fn unique_name(used: &mut HashSet<String>, base: String) -> String {
         }
         n += 1;
     }
-}
-
-fn build_name(cfg: &NamingConfig, node: &str, index: usize, probe_cache: &ProbeCache) -> String {
-    let hint = extract_original_display_name(node);
-    let (host, port) = extract_v2ray_endpoint(node)
-        .or_else(|| extract_clash_endpoint(node))
-        .unwrap_or_else(|| ("?".into(), 0));
-
-    let country = detect_country(&host, hint.as_deref());
-    let latency = format_latency(probe_cache.get(&(host.clone(), port)));
-    let proto = node_protocol(node);
-    let port_str = if port > 0 {
-        port.to_string()
-    } else {
-        "?".to_string()
-    };
-    let index_str = format!("{index:03}");
-
-    apply_template(
-        &cfg.template,
-        &[
-            ("country", &country),
-            ("latency", &latency),
-            ("proto", &proto),
-            ("host", &host),
-            ("port", &port_str),
-            ("index", &index_str),
-        ],
-    )
 }
 
 fn format_latency(result: Option<&crate::probe::ProbeResult>) -> String {
@@ -361,6 +448,7 @@ mod tests {
             enabled: true,
             template: "{country}-{latency}".to_string(),
             first_name: "孔大夫-我做个艺术家".to_string(),
+            tag_source: true,
         }
     }
 
@@ -462,5 +550,29 @@ mod tests {
         let n2 = out[1].split('#').nth(1).unwrap();
         let n3 = out[2].split('#').nth(1).unwrap();
         assert_ne!(n2, n3);
+    }
+
+    #[test]
+    fn includes_source_in_name() {
+        let mut cache = HashMap::new();
+        cache.insert(
+            ("1.2.3.4".into(), 443),
+            ProbeResult {
+                reachable: true,
+                latency_ms: Some(42),
+            },
+        );
+        let cfg = NamingConfig {
+            enabled: true,
+            template: "{source}-{country}-{latency}".to_string(),
+            first_name: "first".to_string(),
+            tag_source: true,
+        };
+        let nodes = vec![
+            TaggedNode::new("vless://a@9.9.9.9:443#x".to_string(), "src-a"),
+            TaggedNode::new("vless://b@1.2.3.4:443#y".to_string(), "nodev2rayn"),
+        ];
+        let out = rename_v2ray_tagged(&nodes, &cfg, &cache);
+        assert_eq!(out[1].node.split('#').nth(1).unwrap(), "nodev2rayn-香港-42ms");
     }
 }

@@ -1,5 +1,5 @@
 use anyhow::Result;
-use chrono::Utc;
+use chrono::{FixedOffset, Utc};
 use serde::Serialize;
 use std::path::Path;
 
@@ -156,7 +156,11 @@ fn render_readme(report: &SyncReport, v2ray_b64: &str, clash_yaml: &str) -> Stri
 }
 
 pub fn now_iso() -> String {
-    Utc::now().format("%Y-%m-%d %H:%M:%S UTC").to_string()
+    let beijing = FixedOffset::east_opt(8 * 3600).expect("Beijing offset");
+    Utc::now()
+        .with_timezone(&beijing)
+        .format("%Y-%m-%d %H:%M:%S 北京时间")
+        .to_string()
 }
 
 pub fn config_path() -> String {

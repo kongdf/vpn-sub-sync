@@ -14,8 +14,10 @@ drop_unparsed = true
 [naming]
 enabled = true
 # 首个 v2ray 节点使用 first_name，其余节点按 template 命名
+# 可用变量：{source} {country} {latency} {proto} {host} {port} {index}
 first_name = "孔大夫-我做个艺术家"
-template = "{country}-{latency}"
+template = "{source}-{country}-{latency}"
+tag_source = true
 
 [[source]]
 name = "Au1rxx"
@@ -35,13 +37,6 @@ enabled = true
 name = "ripaojiedian"
 kind = "direct"
 url = "https://raw.githubusercontent.com/ripaojiedian/freenode/main/sub"
-format = "v2ray"
-enabled = true
-
-[[source]]
-name = "runfacishan"
-kind = "direct"
-url = "https://d.zrf.me/vless-base64"
 format = "v2ray"
 enabled = true
 
@@ -78,24 +73,18 @@ format = "v2ray"
 enabled = true
 
 # --- Clash 格式（可选）---
+# 上次同步 Clash 代理数 0（探测后无可达节点），暂时关闭以加快同步
 
 [[source]]
 name = "xrayvip-clash"
 kind = "direct"
 url = "https://www.xrayvip.com/free.yaml"
 format = "clash"
-enabled = true
-
-[[source]]
-name = "mfuu-clash"
-kind = "direct"
-url = "https://raw.githubusercontent.com/mfuu/v2ray/master/clash.yaml"
-format = "clash"
-enabled = true
+enabled = false
 
 [[source]]
 name = "anaer-clash"
 kind = "direct"
 url = "https://raw.githubusercontent.com/anaer/Sub/main/clash.yaml"
 format = "clash"
-enabled = true
+enabled = false

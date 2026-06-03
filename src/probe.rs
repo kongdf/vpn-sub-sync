@@ -30,6 +30,48 @@ pub struct ProbeStats {
     pub unparsed: usize,
 }
 
+use crate::tag::{TaggedChunk, TaggedNode};
+
+pub async fn filter_v2ray_tagged(
+    nodes: &[TaggedNode],
+    cfg: &ProbeConfig,
+) -> (Vec<TaggedNode>, ProbeStats, ProbeCache) {
+    let plain: Vec<String> = nodes.iter().map(|t| t.node.clone()).collect();
+    let (filtered, stats, cache) = filter_v2ray_nodes(&plain, cfg).await;
+
+    if !cfg.enabled || nodes.is_empty() {
+        return (nodes.to_vec(), stats, cache);
+    }
+
+    let kept: std::collections::HashSet<_> = filtered.iter().collect();
+    let tagged = nodes
+        .iter()
+        .filter(|t| kept.contains(&t.node))
+        .cloned()
+        .collect();
+    (tagged, stats, cache)
+}
+
+pub async fn filter_clash_tagged(
+    chunks: &[TaggedChunk],
+    cfg: &ProbeConfig,
+) -> (Vec<TaggedChunk>, ProbeStats, ProbeCache) {
+    let plain: Vec<String> = chunks.iter().map(|c| c.body.clone()).collect();
+    let (filtered, stats, cache) = filter_clash_chunks(&plain, cfg).await;
+
+    if !cfg.enabled || chunks.is_empty() {
+        return (chunks.to_vec(), stats, cache);
+    }
+
+    let kept: std::collections::HashSet<_> = filtered.iter().collect();
+    let tagged = chunks
+        .iter()
+        .filter(|c| kept.contains(&c.body))
+        .cloned()
+        .collect();
+    (tagged, stats, cache)
+}
+
 pub async fn filter_v2ray_nodes(
     nodes: &[String],
     cfg: &ProbeConfig,

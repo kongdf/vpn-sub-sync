@@ -58,6 +58,8 @@ pub struct NamingSettings {
     pub template: String,
     #[serde(default = "default_first_name")]
     pub first_name: String,
+    #[serde(default = "default_tag_source")]
+    pub tag_source: bool,
 }
 
 impl Default for NamingSettings {
@@ -66,16 +68,21 @@ impl Default for NamingSettings {
             enabled: false,
             template: default_naming_template(),
             first_name: default_first_name(),
+            tag_source: default_tag_source(),
         }
     }
 }
 
 fn default_naming_template() -> String {
-    "{country}-{latency}".to_string()
+    "{source}-{country}-{latency}".to_string()
 }
 
 fn default_first_name() -> String {
     "孔大夫-我做个艺术家".to_string()
+}
+
+fn default_tag_source() -> bool {
+    true
 }
 
 #[derive(Debug, Clone, Deserialize)]
