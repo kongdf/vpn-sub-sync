@@ -1,13 +1,18 @@
 mod config;
+mod country;
 mod fetcher;
 mod github_readme;
+mod naming;
 mod parser;
+mod probe;
 mod writer;
 
 use anyhow::Result;
-use config::{load_config, Source};
+use config::{load_config, NamingSettings, Source};
 use fetcher::Fetcher;
-use writer::{now_iso, output_path, SourceReport, SyncReport, Writer};
+use naming::NamingConfig;
+use probe::{ProbeCache, ProbeConfig, ProbeStats};
+use writer::{now_iso, output_path, ProbeKindReport, ProbeReport, SourceReport, SyncReport, Writer};
 
 struct SyncOutcome {
     report: SourceReport,
@@ -30,6 +35,8 @@ async fn main() -> Result<()> {
     let mut v2ray_nodes: Vec<String> = Vec::new();
     let mut clash_chunks: Vec<String> = Vec::new();
     let mut reports: Vec<SourceReport> = Vec::new();
+
+    let naming_cfg = naming_config(&cfg.naming);
 
     for source in &cfg.source {
         if !source.enabled {
@@ -56,7 +63,50 @@ async fn main() -> Result<()> {
         reports.push(outcome.report);
     }
 
-    let merged_stats = parser::parse_v2ray_content(&v2ray_nodes.join("\n"));
+    let mut merged_stats = parser::parse_v2ray_content(&v2ray_nodes.join("\n"));
+    let probe_cfg = ProbeConfig {
+        enabled: cfg.probe.enabled,
+        timeout_secs: cfg.probe.timeout_secs,
+        concurrency: cfg.probe.concurrency,
+    };
+
+    let mut probe_report = None;
+    let mut probe_cache = ProbeCache::new();
+    if probe_cfg.enabled {
+        println!("\n[probe] TCP check (timeout {}s, concurrency {})", probe_cfg.timeout_secs, probe_cfg.concurrency);
+
+        let (filtered, v2ray_probe, v2ray_cache) =
+            probe::filter_v2ray_nodes(&merged_stats.nodes, &probe_cfg).await;
+        merged_stats.nodes = filtered;
+        merged_stats.protocols = parser::count_protocols(&merged_stats.nodes);
+        probe_cache.extend(v2ray_cache);
+
+        let (filtered_chunks, clash_probe, clash_cache) =
+            probe::filter_clash_chunks(&clash_chunks, &probe_cfg).await;
+        clash_chunks = filtered_chunks;
+        probe_cache.extend(clash_cache);
+
+        print_probe_stats("v2ray", &v2ray_probe);
+        if clash_probe.before > 0 {
+            print_probe_stats("clash", &clash_probe);
+        }
+
+        probe_report = Some(ProbeReport {
+            enabled: true,
+            timeout_secs: probe_cfg.timeout_secs,
+            concurrency: probe_cfg.concurrency,
+            v2ray: ProbeKindReport::from(v2ray_probe),
+            clash: ProbeKindReport::from(clash_probe),
+        });
+    }
+
+    if naming_cfg.enabled {
+        println!("\n[naming] {}", naming_cfg.template);
+        merged_stats.nodes =
+            naming::rename_v2ray_nodes(&merged_stats.nodes, &naming_cfg, &probe_cache);
+        clash_chunks = naming::rename_clash_chunks(&clash_chunks, &naming_cfg, &probe_cache);
+    }
+
     let v2ray_b64 = if merged_stats.nodes.is_empty() {
         String::new()
     } else {
@@ -74,6 +124,7 @@ async fn main() -> Result<()> {
         synced_at: now_iso(),
         v2ray_total_nodes: merged_stats.nodes.len(),
         clash_proxy_count: clash_count,
+        probe: probe_report,
         sources: reports,
     };
 
@@ -206,5 +257,20 @@ async fn sync_source(fetcher: &Fetcher, source: &Source) -> SyncOutcome {
         },
         v2ray_nodes: vec![],
         clash_body: None,
+    }
+}
+
+fn print_probe_stats(kind: &str, stats: &ProbeStats) {
+    println!(
+        "  {kind}: {} -> {} (reachable {}, unreachable {}, unparsed {})",
+        stats.before, stats.after, stats.reachable, stats.unreachable, stats.unparsed
+    );
+}
+
+fn naming_config(settings: &NamingSettings) -> NamingConfig {
+    NamingConfig {
+        enabled: settings.enabled,
+        template: settings.template.clone(),
+        first_name: settings.first_name.clone(),
     }
 }

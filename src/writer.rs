@@ -4,6 +4,36 @@ use serde::Serialize;
 use std::path::Path;
 
 #[derive(Debug, Serialize)]
+pub struct ProbeKindReport {
+    pub before: usize,
+    pub after: usize,
+    pub reachable: usize,
+    pub unreachable: usize,
+    pub unparsed: usize,
+}
+
+impl From<crate::probe::ProbeStats> for ProbeKindReport {
+    fn from(stats: crate::probe::ProbeStats) -> Self {
+        Self {
+            before: stats.before,
+            after: stats.after,
+            reachable: stats.reachable,
+            unreachable: stats.unreachable,
+            unparsed: stats.unparsed,
+        }
+    }
+}
+
+#[derive(Debug, Serialize)]
+pub struct ProbeReport {
+    pub enabled: bool,
+    pub timeout_secs: u64,
+    pub concurrency: usize,
+    pub v2ray: ProbeKindReport,
+    pub clash: ProbeKindReport,
+}
+
+#[derive(Debug, Serialize)]
 pub struct SourceReport {
     pub name: String,
     pub kind: String,
@@ -21,6 +51,8 @@ pub struct SyncReport {
     pub synced_at: String,
     pub v2ray_total_nodes: usize,
     pub clash_proxy_count: usize,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub probe: Option<ProbeReport>,
     pub sources: Vec<SourceReport>,
 }
 
@@ -70,6 +102,32 @@ fn render_readme(report: &SyncReport, v2ray_b64: &str, clash_yaml: &str) -> Stri
         "**v2ray 节点总数：** {} | **Clash 代理数：** {}\n\n",
         report.v2ray_total_nodes, report.clash_proxy_count
     ));
+
+    if let Some(probe) = &report.probe {
+        md.push_str("## TCP 探测\n\n");
+        md.push_str(&format!(
+            "超时 {}s，并发 {}。不可达节点已剔除；无法解析端点的节点保留。\n\n",
+            probe.timeout_secs, probe.concurrency
+        ));
+        md.push_str("| 类型 | 探测前 | 保留 | 可达 | 不可达 | 未解析 |\n");
+        md.push_str("|---|---|---|---|---|---|\n");
+        md.push_str(&format!(
+            "| v2ray | {} | {} | {} | {} | {} |\n",
+            probe.v2ray.before,
+            probe.v2ray.after,
+            probe.v2ray.reachable,
+            probe.v2ray.unreachable,
+            probe.v2ray.unparsed
+        ));
+        md.push_str(&format!(
+            "| clash | {} | {} | {} | {} | {} |\n\n",
+            probe.clash.before,
+            probe.clash.after,
+            probe.clash.reachable,
+            probe.clash.unreachable,
+            probe.clash.unparsed
+        ));
+    }
 
     md.push_str("## 订阅链接\n\n");
     md.push_str("将 `YOUR_USER/YOUR_REPO` 替换为你的 GitHub 仓库路径：\n\n");

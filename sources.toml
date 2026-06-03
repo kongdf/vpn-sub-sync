@@ -1,6 +1,17 @@
 # 订阅源配置：增删源只需改此文件，无需改代码
 # kind: direct = 直链 | github_readme = 从仓库 README 解析订阅 URL
 
+[probe]
+enabled = true
+timeout_secs = 3
+concurrency = 50
+
+[naming]
+enabled = true
+# 首个 v2ray 节点使用 first_name，其余节点按 template 命名
+first_name = "孔大夫-我做个艺术家"
+template = "{country}-{latency}"
+
 [[source]]
 name = "Au1rxx"
 kind = "direct"

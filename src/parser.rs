@@ -62,7 +62,7 @@ fn looks_like_node(line: &str) -> bool {
     NODE_PREFIXES.iter().any(|p| line.starts_with(p))
 }
 
-fn count_protocols(nodes: &[String]) -> Vec<(String, usize)> {
+pub fn count_protocols(nodes: &[String]) -> Vec<(String, usize)> {
     let mut counts = std::collections::BTreeMap::new();
     for node in nodes {
         let proto = NODE_PREFIXES
@@ -102,6 +102,22 @@ pub fn merge_clash_yaml(chunks: &[String]) -> String {
 
     let mut out = String::from("proxies:\n");
     for block in proxies {
+        for line in block.lines() {
+            out.push_str("  ");
+            out.push_str(line);
+            out.push('\n');
+        }
+    }
+    out
+}
+
+pub fn extract_clash_proxy_blocks(yaml: &str) -> Option<Vec<String>> {
+    extract_clash_proxies(yaml)
+}
+
+pub fn build_clash_proxies(blocks: &[String]) -> String {
+    let mut out = String::from("proxies:\n");
+    for block in blocks {
         for line in block.lines() {
             out.push_str("  ");
             out.push_str(line);

@@ -3,6 +3,66 @@ use serde::Deserialize;
 #[derive(Debug, Clone, Deserialize)]
 pub struct Config {
     pub source: Vec<Source>,
+    #[serde(default)]
+    pub probe: ProbeSettings,
+    #[serde(default)]
+    pub naming: NamingSettings,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct NamingSettings {
+    #[serde(default)]
+    pub enabled: bool,
+    #[serde(default = "default_naming_template")]
+    pub template: String,
+    #[serde(default = "default_first_name")]
+    pub first_name: String,
+}
+
+impl Default for NamingSettings {
+    fn default() -> Self {
+        Self {
+            enabled: false,
+            template: default_naming_template(),
+            first_name: default_first_name(),
+        }
+    }
+}
+
+fn default_naming_template() -> String {
+    "{country}-{latency}".to_string()
+}
+
+fn default_first_name() -> String {
+    "孔大夫-我做个艺术家".to_string()
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct ProbeSettings {
+    #[serde(default)]
+    pub enabled: bool,
+    #[serde(default = "default_probe_timeout_secs")]
+    pub timeout_secs: u64,
+    #[serde(default = "default_probe_concurrency")]
+    pub concurrency: usize,
+}
+
+impl Default for ProbeSettings {
+    fn default() -> Self {
+        Self {
+            enabled: false,
+            timeout_secs: default_probe_timeout_secs(),
+            concurrency: default_probe_concurrency(),
+        }
+    }
+}
+
+fn default_probe_timeout_secs() -> u64 {
+    3
+}
+
+fn default_probe_concurrency() -> usize {
+    50
 }
 
 #[derive(Debug, Clone, Deserialize)]
