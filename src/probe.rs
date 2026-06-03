@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::net::SocketAddr;
 use std::time::{Duration, Instant};
 
@@ -138,8 +138,8 @@ async fn probe_endpoints(
 ) -> ProbeCache {
     let unique: Vec<(String, u16)> = endpoints
         .into_iter()
-        .collect::<HashMap<(String, u16), ()>>()
-        .into_keys()
+        .collect::<HashSet<_>>()
+        .into_iter()
         .collect();
 
     let sem = std::sync::Arc::new(Semaphore::new(cfg.concurrency.max(1)));
