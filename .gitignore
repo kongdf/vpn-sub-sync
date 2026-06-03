@@ -1,1 +1,5 @@
-output/
+# 本地 sync 产物（由 Actions 用 git add -f 发布）
+output/*
+!output/.gitkeep
+
+/target/

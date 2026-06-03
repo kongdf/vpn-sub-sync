@@ -18,7 +18,7 @@ cd vpn-sub-sync
 cargo run --release
 ```
 
-产物在 `output/` 目录。
+产物在 `output/` 目录（已 gitignore，本地运行不会误提交）。
 
 ## 推到 GitHub
 
@@ -80,7 +80,7 @@ vpn-sub-sync/
 │   ├── github_readme.rs
 │   ├── parser.rs
 │   └── writer.rs
-├── output/                   # 同步产物（提交到 git）
+├── output/                   # 同步产物（本地忽略，Actions 发布）
 └── .github/workflows/sync.yml
 ```
 
