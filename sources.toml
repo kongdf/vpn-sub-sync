@@ -72,6 +72,76 @@ url_pattern = 'https://nodev2rayn\.github\.io/uploads/\d{4}/\d{2}/\d+-[\d]+\.txt
 format = "v2ray"
 enabled = true
 
+[[source]]
+name = "Epodonios"
+kind = "direct"
+url = "https://github.com/Epodonios/v2ray-configs/raw/main/All_Configs_base64_Sub.txt"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "MatinGhanbari"
+kind = "direct"
+url = "https://raw.githubusercontent.com/MatinGhanbari/v2ray-configs/main/subscriptions/v2ray/all_sub.txt"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "ebrasha"
+kind = "direct"
+url = "https://raw.githubusercontent.com/ebrasha/free-v2ray-public-list/main/V2Ray-Config-By-EbraSha-All-Type.txt"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "FastNodes"
+kind = "direct"
+url = "https://raw.githubusercontent.com/rtwo2/FastNodes/main/sub/everything.txt"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "vovaplus-vless"
+kind = "direct"
+url = "https://raw.githubusercontent.com/VovaplusEXP/p-configs/main/Splitted-By-Protocol-Base64/vless.txt"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "vovaplus-vmess"
+kind = "direct"
+url = "https://raw.githubusercontent.com/VovaplusEXP/p-configs/main/Splitted-By-Protocol-Base64/vmess.txt"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "vovaplus-ss"
+kind = "direct"
+url = "https://raw.githubusercontent.com/VovaplusEXP/p-configs/main/Splitted-By-Protocol-Base64/ss.txt"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "vovaplus-trojan"
+kind = "direct"
+url = "https://raw.githubusercontent.com/VovaplusEXP/p-configs/main/Splitted-By-Protocol-Base64/trojan.txt"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "vovaplus-hy2"
+kind = "direct"
+url = "https://raw.githubusercontent.com/VovaplusEXP/p-configs/main/Splitted-By-Protocol-Base64/hy2.txt"
+format = "v2ray"
+enabled = true
+
+[[source]]
+name = "vovaplus-tuic"
+kind = "direct"
+url = "https://raw.githubusercontent.com/VovaplusEXP/p-configs/main/Splitted-By-Protocol-Base64/tuic.txt"
+format = "v2ray"
+enabled = true
+
 # --- Clash 格式（可选）---
 # 上次同步 Clash 代理数 0（探测后无可达节点），暂时关闭以加快同步
 
