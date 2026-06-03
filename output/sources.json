@@ -1,0 +1,247 @@
+{
+  "synced_at": "2026-06-03 03:46:40 UTC",
+  "v2ray_total_nodes": 1970,
+  "clash_proxy_count": 0,
+  "sources": [
+    {
+      "name": "Au1rxx",
+      "kind": "direct",
+      "format": "v2ray",
+      "resolved_url": "https://github.com/Au1rxx/free-vpn-subscriptions/raw/main/output/v2ray-base64.txt",
+      "ok": true,
+      "node_count": 91,
+      "protocols": [
+        [
+          "ss",
+          14
+        ],
+        [
+          "trojan",
+          34
+        ],
+        [
+          "vless",
+          21
+        ],
+        [
+          "vmess",
+          22
+        ]
+      ],
+      "error": null,
+      "fetched_at": "2026-06-03 03:46:32 UTC"
+    },
+    {
+      "name": "DaBao-Lee",
+      "kind": "direct",
+      "format": "v2ray",
+      "resolved_url": "https://raw.githubusercontent.com/DaBao-Lee/V2RayN-NodeShare/main/base64",
+      "ok": true,
+      "node_count": 50,
+      "protocols": [
+        [
+          "ss",
+          8
+        ],
+        [
+          "trojan",
+          1
+        ],
+        [
+          "vless",
+          28
+        ],
+        [
+          "vmess",
+          13
+        ]
+      ],
+      "error": null,
+      "fetched_at": "2026-06-03 03:46:32 UTC"
+    },
+    {
+      "name": "ripaojiedian",
+      "kind": "direct",
+      "format": "v2ray",
+      "resolved_url": "https://raw.githubusercontent.com/ripaojiedian/freenode/main/sub",
+      "ok": true,
+      "node_count": 15,
+      "protocols": [
+        [
+          "ss",
+          1
+        ],
+        [
+          "trojan",
+          12
+        ],
+        [
+          "vmess",
+          2
+        ]
+      ],
+      "error": null,
+      "fetched_at": "2026-06-03 03:46:32 UTC"
+    },
+    {
+      "name": "runfacishan",
+      "kind": "direct",
+      "format": "v2ray",
+      "resolved_url": "https://d.zrf.me/vless-base64",
+      "ok": false,
+      "node_count": 0,
+      "protocols": [],
+      "error": "HTTP 404 Not Found for https://d.zrf.me/vless-base64",
+      "fetched_at": "2026-06-03 03:46:32 UTC"
+    },
+    {
+      "name": "chengaopan",
+      "kind": "direct",
+      "format": "v2ray",
+      "resolved_url": "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/master/list.txt",
+      "ok": true,
+      "node_count": 93,
+      "protocols": [
+        [
+          "hysteria2",
+          51
+        ],
+        [
+          "ss",
+          2
+        ],
+        [
+          "trojan",
+          13
+        ],
+        [
+          "vless",
+          23
+        ],
+        [
+          "vmess",
+          4
+        ]
+      ],
+      "error": null,
+      "fetched_at": "2026-06-03 03:46:39 UTC"
+    },
+    {
+      "name": "xrayvip-v2ray",
+      "kind": "direct",
+      "format": "v2ray",
+      "resolved_url": "https://www.xrayvip.com/free.txt",
+      "ok": true,
+      "node_count": 29,
+      "protocols": [
+        [
+          "ss",
+          7
+        ],
+        [
+          "vless",
+          10
+        ],
+        [
+          "vmess",
+          12
+        ]
+      ],
+      "error": null,
+      "fetched_at": "2026-06-03 03:46:39 UTC"
+    },
+    {
+      "name": "free-nodes",
+      "kind": "github_readme",
+      "format": "v2ray",
+      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202606032",
+      "ok": true,
+      "node_count": 216,
+      "protocols": [
+        [
+          "hysteria2",
+          21
+        ],
+        [
+          "ss",
+          26
+        ],
+        [
+          "trojan",
+          24
+        ],
+        [
+          "vless",
+          131
+        ],
+        [
+          "vmess",
+          14
+        ]
+      ],
+      "error": null,
+      "fetched_at": "2026-06-03 03:46:39 UTC"
+    },
+    {
+      "name": "nodev2rayn",
+      "kind": "github_readme",
+      "format": "v2ray",
+      "resolved_url": "https://nodev2rayn.github.io/uploads/2026/05/4-20260529.txt",
+      "ok": true,
+      "node_count": 1476,
+      "protocols": [
+        [
+          "ss",
+          167
+        ],
+        [
+          "trojan",
+          123
+        ],
+        [
+          "vless",
+          955
+        ],
+        [
+          "vmess",
+          231
+        ]
+      ],
+      "error": null,
+      "fetched_at": "2026-06-03 03:46:39 UTC"
+    },
+    {
+      "name": "xrayvip-clash",
+      "kind": "direct",
+      "format": "clash",
+      "resolved_url": "https://www.xrayvip.com/free.yaml",
+      "ok": true,
+      "node_count": 5,
+      "protocols": [],
+      "error": null,
+      "fetched_at": "2026-06-03 03:46:39 UTC"
+    },
+    {
+      "name": "mfuu-clash",
+      "kind": "direct",
+      "format": "clash",
+      "resolved_url": "https://raw.githubusercontent.com/mfuu/v2ray/master/clash.yaml",
+      "ok": true,
+      "node_count": 0,
+      "protocols": [],
+      "error": null,
+      "fetched_at": "2026-06-03 03:46:40 UTC"
+    },
+    {
+      "name": "anaer-clash",
+      "kind": "direct",
+      "format": "clash",
+      "resolved_url": "https://raw.githubusercontent.com/anaer/Sub/main/clash.yaml",
+      "ok": true,
+      "node_count": 58,
+      "protocols": [],
+      "error": null,
+      "fetched_at": "2026-06-03 03:46:40 UTC"
+    }
+  ]
+}
