@@ -1,16 +1,16 @@
 {
-  "synced_at": "2026-06-03 04:16:06 UTC",
-  "v2ray_total_nodes": 739,
+  "synced_at": "2026-06-03 13:14:42 北京时间",
+  "v2ray_total_nodes": 732,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
     "timeout_secs": 3,
     "concurrency": 50,
     "v2ray": {
-      "before": 1977,
-      "after": 1515,
-      "reachable": 1070,
-      "unreachable": 462,
+      "before": 1988,
+      "after": 1536,
+      "reachable": 1091,
+      "unreachable": 452,
       "unparsed": 445
     },
     "clash": {
@@ -48,7 +48,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-03 04:15:41 UTC"
+      "fetched_at": "2026-06-03 13:14:19 北京时间"
     },
     {
       "name": "DaBao-Lee",
@@ -76,7 +76,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-03 04:15:42 UTC"
+      "fetched_at": "2026-06-03 13:14:19 北京时间"
     },
     {
       "name": "ripaojiedian",
@@ -100,18 +100,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-03 04:15:42 UTC"
-    },
-    {
-      "name": "runfacishan",
-      "kind": "direct",
-      "format": "v2ray",
-      "resolved_url": "https://d.zrf.me/vless-base64",
-      "ok": false,
-      "node_count": 0,
-      "protocols": [],
-      "error": "HTTP 404 Not Found for https://d.zrf.me/vless-base64",
-      "fetched_at": "2026-06-03 04:15:42 UTC"
+      "fetched_at": "2026-06-03 13:14:19 北京时间"
     },
     {
       "name": "chengaopan",
@@ -143,7 +132,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-03 04:15:46 UTC"
+      "fetched_at": "2026-06-03 13:14:20 北京时间"
     },
     {
       "name": "xrayvip-v2ray",
@@ -167,7 +156,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-03 04:15:46 UTC"
+      "fetched_at": "2026-06-03 13:14:20 北京时间"
     },
     {
       "name": "free-nodes",
@@ -175,7 +164,7 @@
       "format": "v2ray",
       "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202606032",
       "ok": true,
-      "node_count": 216,
+      "node_count": 227,
       "protocols": [
         [
           "hysteria2",
@@ -187,19 +176,19 @@
         ],
         [
           "trojan",
-          24
+          27
         ],
         [
           "vless",
-          131
+          116
         ],
         [
           "vmess",
-          14
+          37
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-03 04:15:47 UTC"
+      "fetched_at": "2026-06-03 13:14:20 北京时间"
     },
     {
       "name": "nodev2rayn",
@@ -227,40 +216,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-03 04:15:47 UTC"
-    },
-    {
-      "name": "xrayvip-clash",
-      "kind": "direct",
-      "format": "clash",
-      "resolved_url": "https://www.xrayvip.com/free.yaml",
-      "ok": true,
-      "node_count": 5,
-      "protocols": [],
-      "error": null,
-      "fetched_at": "2026-06-03 04:15:47 UTC"
-    },
-    {
-      "name": "mfuu-clash",
-      "kind": "direct",
-      "format": "clash",
-      "resolved_url": "https://raw.githubusercontent.com/mfuu/v2ray/master/clash.yaml",
-      "ok": true,
-      "node_count": 0,
-      "protocols": [],
-      "error": null,
-      "fetched_at": "2026-06-03 04:15:47 UTC"
-    },
-    {
-      "name": "anaer-clash",
-      "kind": "direct",
-      "format": "clash",
-      "resolved_url": "https://raw.githubusercontent.com/anaer/Sub/main/clash.yaml",
-      "ok": true,
-      "node_count": 58,
-      "protocols": [],
-      "error": null,
-      "fetched_at": "2026-06-03 04:15:47 UTC"
+      "fetched_at": "2026-06-03 13:14:21 北京时间"
     }
   ]
 }
