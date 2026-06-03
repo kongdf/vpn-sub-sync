@@ -6,6 +6,11 @@ enabled = true
 timeout_secs = 3
 concurrency = 50
 
+[filter]
+dedupe_endpoint = true
+max_latency_ms = 3000
+drop_unparsed = true
+
 [naming]
 enabled = true
 # 首个 v2ray 节点使用 first_name，其余节点按 template 命名

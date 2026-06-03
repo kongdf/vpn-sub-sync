@@ -198,9 +198,86 @@ fn set_v2ray_display_name(node: &str, display_name: &str) -> String {
     if trimmed.starts_with("vmess://") {
         return set_vmess_display_name(trimmed, display_name);
     }
+    if trimmed.starts_with("ssr://") {
+        return set_ssr_display_name(trimmed, display_name);
+    }
 
     let base = trimmed.split('#').next().unwrap_or(trimmed);
-    format!("{}#{}", base, encode_fragment(display_name))
+    format!("{}#{}", base, format_v2ray_alias(display_name))
+}
+
+fn format_v2ray_alias(name: &str) -> String {
+    // v2rayN / v2rayNG 直接支持 UTF-8 别名，只需转义 fragment 保留字
+    name.replace('%', "%25").replace('#', "%23")
+}
+
+fn decode_fragment(input: &str) -> String {
+    let mut out = String::new();
+    let mut chars = input.chars().peekable();
+    while let Some(c) = chars.next() {
+        if c == '%' {
+            let h1 = chars.next();
+            let h2 = chars.next();
+            if let (Some(a), Some(b)) = (h1, h2) {
+                if let Ok(byte) = u8::from_str_radix(&format!("{a}{b}"), 16) {
+                    out.push(byte as char);
+                    continue;
+                }
+            }
+            out.push('%');
+            if let Some(a) = h1 {
+                out.push(a);
+            }
+            if let Some(b) = h2 {
+                out.push(b);
+            }
+        } else {
+            out.push(c);
+        }
+    }
+    out
+}
+
+fn set_ssr_display_name(url: &str, display_name: &str) -> String {
+    let payload = match url.strip_prefix("ssr://") {
+        Some(p) => p.split('#').next().unwrap_or(p),
+        None => return url.to_string(),
+    };
+
+    let Some(decoded) = base64_decode(payload) else {
+        return url.to_string();
+    };
+
+    let remarks_b64 = base64_encode(display_name);
+    let new_inner = if let Some(pos) = decoded.find("/?") {
+        let (main, query) = decoded.split_at(pos);
+        let query = query.trim_start_matches("/?");
+        format!("{main}/?{}", upsert_query_param(query, "remarks", &remarks_b64))
+    } else if let Some(pos) = decoded.find('?') {
+        let (main, query) = decoded.split_at(pos);
+        let query = query.trim_start_matches('?');
+        format!("{main}?{}", upsert_query_param(query, "remarks", &remarks_b64))
+    } else {
+        format!("{decoded}/?remarks={remarks_b64}")
+    };
+
+    format!("ssr://{}", base64_encode(&new_inner))
+}
+
+fn upsert_query_param(query: &str, key: &str, value: &str) -> String {
+    let prefix = format!("{key}=");
+    let mut parts: Vec<String> = query
+        .split('&')
+        .filter(|p| !p.is_empty() && !p.starts_with(&prefix))
+        .map(|p| p.to_string())
+        .collect();
+    parts.push(format!("{prefix}{value}"));
+    parts.join("&")
+}
+
+fn base64_encode(input: &str) -> String {
+    use base64::Engine;
+    base64::engine::general_purpose::STANDARD.encode(input.as_bytes())
 }
 
 fn set_vmess_display_name(url: &str, display_name: &str) -> String {
@@ -264,42 +341,6 @@ fn clash_name_value(name: &str) -> String {
     }
 }
 
-fn encode_fragment(name: &str) -> String {
-    name.chars()
-        .map(|c| match c {
-            'A'..='Z' | 'a'..='z' | '0'..='9' | '-' | '_' | '.' | '~' => c.to_string(),
-            _ => format!("%{:02X}", c as u32),
-        })
-        .collect()
-}
-
-fn decode_fragment(input: &str) -> String {
-    let mut out = String::new();
-    let mut chars = input.chars().peekable();
-    while let Some(c) = chars.next() {
-        if c == '%' {
-            let h1 = chars.next();
-            let h2 = chars.next();
-            if let (Some(a), Some(b)) = (h1, h2) {
-                if let Ok(byte) = u8::from_str_radix(&format!("{a}{b}"), 16) {
-                    out.push(byte as char);
-                    continue;
-                }
-            }
-            out.push('%');
-            if let Some(a) = h1 {
-                out.push(a);
-            }
-            if let Some(b) = h2 {
-                out.push(b);
-            }
-        } else {
-            out.push(c);
-        }
-    }
-    out
-}
-
 fn base64_decode(input: &str) -> Option<String> {
     use base64::Engine;
     let cleaned: String = input.chars().filter(|c| !c.is_whitespace()).collect();
@@ -324,15 +365,55 @@ mod tests {
     }
 
     #[test]
-    fn first_node_uses_custom_name() {
+    fn first_node_uses_plain_utf8_alias() {
         let cache = HashMap::new();
         let nodes = vec![
             "vless://a@1.2.3.4:443#x".to_string(),
             "vless://b@1.2.3.5:443#y".to_string(),
         ];
         let out = rename_v2ray_nodes(&nodes, &cfg(), &cache);
-        let n1 = decode_fragment(out[0].split('#').nth(1).unwrap());
-        assert_eq!(n1, "孔大夫-我做个艺术家");
+        assert_eq!(
+            out[0].split('#').nth(1).unwrap(),
+            "孔大夫-我做个艺术家"
+        );
+    }
+
+    #[test]
+    fn renames_ssr_remarks() {
+        use base64::Engine;
+        let inner = "1.2.3.4:8388:origin:aes-256-cfb:plain:/?remarks=";
+        let old_remarks = base64::engine::general_purpose::STANDARD.encode("old-name");
+        let payload = base64::engine::general_purpose::STANDARD
+            .encode(format!("{inner}{old_remarks}"));
+        let node = format!("ssr://{payload}");
+        let mut cache = HashMap::new();
+        cache.insert(
+            ("1.2.3.4".into(), 8388),
+            ProbeResult {
+                reachable: true,
+                latency_ms: Some(42),
+            },
+        );
+        let out = rename_v2ray_nodes(&[node], &cfg(), &cache);
+        let decoded = base64::engine::general_purpose::STANDARD
+            .decode(out[0].strip_prefix("ssr://").unwrap())
+            .unwrap();
+        let text = String::from_utf8_lossy(&decoded);
+        assert!(text.contains("remarks="));
+        let remarks = text
+            .split("remarks=")
+            .nth(1)
+            .unwrap()
+            .split('&')
+            .next()
+            .unwrap();
+        let name = String::from_utf8(
+            base64::engine::general_purpose::STANDARD
+                .decode(remarks)
+                .unwrap(),
+        )
+        .unwrap();
+        assert_eq!(name, "孔大夫-我做个艺术家");
     }
 
     #[test]
@@ -351,8 +432,7 @@ mod tests {
             node.to_string(),
         ];
         let out = rename_v2ray_nodes(&nodes, &cfg(), &cache);
-        let name = decode_fragment(out[1].split('#').nth(1).unwrap());
-        assert_eq!(name, "香港-86ms");
+        assert_eq!(out[1].split('#').nth(1).unwrap(), "香港-86ms");
     }
 
     #[test]
@@ -378,10 +458,9 @@ mod tests {
             "vless://c@1.2.3.6:443#HK".to_string(),
         ];
         let out = rename_v2ray_nodes(&nodes, &cfg(), &cache);
-        let n1 = decode_fragment(out[0].split('#').nth(1).unwrap());
-        let n2 = decode_fragment(out[1].split('#').nth(1).unwrap());
-        let n3 = decode_fragment(out[2].split('#').nth(1).unwrap());
-        assert_eq!(n1, "孔大夫-我做个艺术家");
+        assert_eq!(out[0].split('#').nth(1).unwrap(), "孔大夫-我做个艺术家");
+        let n2 = out[1].split('#').nth(1).unwrap();
+        let n3 = out[2].split('#').nth(1).unwrap();
         assert_ne!(n2, n3);
     }
 }

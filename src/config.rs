@@ -7,6 +7,47 @@ pub struct Config {
     pub probe: ProbeSettings,
     #[serde(default)]
     pub naming: NamingSettings,
+    #[serde(default)]
+    pub filter: FilterSettings,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FilterSettings {
+    #[serde(default = "default_filter_dedupe")]
+    pub dedupe_endpoint: bool,
+    #[serde(default = "default_filter_max_latency")]
+    pub max_latency_ms: Option<u32>,
+    #[serde(default = "default_filter_max_nodes")]
+    pub max_nodes: Option<usize>,
+    #[serde(default = "default_filter_drop_unparsed")]
+    pub drop_unparsed: bool,
+}
+
+impl Default for FilterSettings {
+    fn default() -> Self {
+        Self {
+            dedupe_endpoint: default_filter_dedupe(),
+            max_latency_ms: default_filter_max_latency(),
+            max_nodes: default_filter_max_nodes(),
+            drop_unparsed: default_filter_drop_unparsed(),
+        }
+    }
+}
+
+fn default_filter_dedupe() -> bool {
+    true
+}
+
+fn default_filter_max_latency() -> Option<u32> {
+    Some(3000)
+}
+
+fn default_filter_max_nodes() -> Option<usize> {
+    None
+}
+
+fn default_filter_drop_unparsed() -> bool {
+    true
 }
 
 #[derive(Debug, Clone, Deserialize)]

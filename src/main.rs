@@ -1,6 +1,7 @@
 mod config;
 mod country;
 mod fetcher;
+mod filter;
 mod github_readme;
 mod naming;
 mod parser;
@@ -8,8 +9,9 @@ mod probe;
 mod writer;
 
 use anyhow::Result;
-use config::{load_config, NamingSettings, Source};
+use config::{load_config, FilterSettings, NamingSettings, Source};
 use fetcher::Fetcher;
+use filter::{FilterConfig, FilterStats};
 use naming::NamingConfig;
 use probe::{ProbeCache, ProbeConfig, ProbeStats};
 use writer::{now_iso, output_path, ProbeKindReport, ProbeReport, SourceReport, SyncReport, Writer};
@@ -98,6 +100,28 @@ async fn main() -> Result<()> {
             v2ray: ProbeKindReport::from(v2ray_probe),
             clash: ProbeKindReport::from(clash_probe),
         });
+    }
+
+    let filter_cfg = filter_config(&cfg.filter);
+    if filter_cfg.enabled() {
+        println!("\n[filter] dedupe={}, max_latency={:?}ms, max_nodes={:?}",
+            filter_cfg.dedupe_endpoint,
+            filter_cfg.max_latency_ms,
+            filter_cfg.max_nodes,
+        );
+
+        let (refined, v2ray_filter) =
+            filter::refine_v2ray_nodes(&merged_stats.nodes, &probe_cache, &filter_cfg);
+        merged_stats.nodes = refined;
+        merged_stats.protocols = parser::count_protocols(&merged_stats.nodes);
+        print_filter_stats("v2ray", &v2ray_filter);
+
+        let (refined_chunks, clash_filter) =
+            filter::refine_clash_chunks(&clash_chunks, &probe_cache, &filter_cfg);
+        clash_chunks = refined_chunks;
+        if clash_filter.before > 0 {
+            print_filter_stats("clash", &clash_filter);
+        }
     }
 
     if naming_cfg.enabled {
@@ -273,4 +297,25 @@ fn naming_config(settings: &NamingSettings) -> NamingConfig {
         template: settings.template.clone(),
         first_name: settings.first_name.clone(),
     }
+}
+
+fn filter_config(settings: &FilterSettings) -> FilterConfig {
+    FilterConfig {
+        dedupe_endpoint: settings.dedupe_endpoint,
+        max_latency_ms: settings.max_latency_ms,
+        max_nodes: settings.max_nodes,
+        drop_unparsed: settings.drop_unparsed,
+    }
+}
+
+fn print_filter_stats(kind: &str, stats: &FilterStats) {
+    println!(
+        "  {kind}: {} -> {} (deduped {}, slow {}, unparsed {}, capped {})",
+        stats.before,
+        stats.after,
+        stats.deduped,
+        stats.slow_dropped,
+        stats.unparsed_dropped,
+        stats.capped
+    );
 }
