@@ -2,9 +2,9 @@
 
 > 公益节点聚合，仅供学习测试；不保证可用性与安全性；请遵守当地法律。
 
-**上次同步：** 2026-06-06 13:54:52 北京时间
+**上次同步：** 2026-06-07 14:25:16 北京时间
 
-**v2ray 节点总数：** 375 | **Clash 代理数：** 0
+**v2ray 节点总数：** 402 | **Clash 代理数：** 0
 
 ## TCP 探测
 
@@ -12,7 +12,7 @@
 
 | 类型 | 探测前 | 保留 | 可达 | 不可达 | 未解析 |
 |---|---|---|---|---|---|
-| v2ray | 926 | 777 | 746 | 149 | 31 |
+| v2ray | 972 | 804 | 773 | 168 | 31 |
 | clash | 0 | 0 | 0 | 0 | 0 |
 
 ## 订阅链接
@@ -26,14 +26,14 @@
 
 | 源 | 状态 | 节点数 | 说明 |
 |---|---|---|---|
-| Au1rxx | ✅ | 98 | - |
+| Au1rxx | ✅ | 94 | - |
 | DaBao-Lee | ✅ | 126 | - |
 | ripaojiedian | ✅ | 15 | - |
-| chengaopan | ✅ | 53 | - |
-| xrayvip-v2ray | ✅ | 11 | - |
-| free-nodes | ✅ | 225 | - |
-| nodev2rayn | ✅ | 227 | - |
-| vovaplus-vless | ✅ | 135 | - |
-| vovaplus-vmess | ✅ | 20 | - |
-| vovaplus-ss | ✅ | 14 | - |
-| vovaplus-trojan | ✅ | 2 | - |
+| chengaopan | ✅ | 64 | - |
+| xrayvip-v2ray | ✅ | 33 | - |
+| free-nodes | ✅ | 257 | - |
+| nodev2rayn | ✅ | 217 | - |
+| vovaplus-vless | ✅ | 151 | - |
+| vovaplus-vmess | ✅ | 7 | - |
+| vovaplus-ss | ✅ | 7 | - |
+| vovaplus-trojan | ✅ | 1 | - |
