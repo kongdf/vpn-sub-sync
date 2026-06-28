@@ -1,17 +1,17 @@
 {
-  "synced_at": "2026-06-27 13:54:55 北京时间",
-  "v2ray_total_nodes": 515,
+  "synced_at": "2026-06-28 14:19:35 北京时间",
+  "v2ray_total_nodes": 448,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
     "timeout_secs": 3,
     "concurrency": 50,
     "v2ray": {
-      "before": 1559,
-      "after": 867,
-      "reachable": 837,
-      "unreachable": 692,
-      "unparsed": 30
+      "before": 1724,
+      "after": 895,
+      "reachable": 867,
+      "unreachable": 829,
+      "unparsed": 28
     },
     "clash": {
       "before": 0,
@@ -28,27 +28,31 @@
       "format": "v2ray",
       "resolved_url": "https://github.com/Au1rxx/free-vpn-subscriptions/raw/main/output/v2ray-base64.txt",
       "ok": true,
-      "node_count": 119,
+      "node_count": 125,
       "protocols": [
         [
+          "hy2",
+          1
+        ],
+        [
           "ss",
-          37
+          36
         ],
         [
           "trojan",
-          34
+          40
         ],
         [
           "vless",
-          22
+          37
         ],
         [
           "vmess",
-          26
+          11
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-27 13:54:23 北京时间"
+      "fetched_at": "2026-06-28 14:18:58 北京时间"
     },
     {
       "name": "DaBao-Lee",
@@ -76,7 +80,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-27 13:54:23 北京时间"
+      "fetched_at": "2026-06-28 14:18:59 北京时间"
     },
     {
       "name": "ripaojiedian",
@@ -100,7 +104,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-27 13:54:23 北京时间"
+      "fetched_at": "2026-06-28 14:18:59 北京时间"
     },
     {
       "name": "chengaopan",
@@ -108,7 +112,7 @@
       "format": "v2ray",
       "resolved_url": "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/master/list.txt",
       "ok": true,
-      "node_count": 56,
+      "node_count": 52,
       "protocols": [
         [
           "hysteria2",
@@ -120,11 +124,11 @@
         ],
         [
           "trojan",
-          10
+          14
         ],
         [
           "vless",
-          17
+          9
         ],
         [
           "vmess",
@@ -132,7 +136,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-27 13:54:23 北京时间"
+      "fetched_at": "2026-06-28 14:18:59 北京时间"
     },
     {
       "name": "xrayvip-v2ray",
@@ -143,12 +147,8 @@
       "node_count": 19,
       "protocols": [
         [
-          "ss",
-          1
-        ],
-        [
           "trojan",
-          3
+          4
         ],
         [
           "vless",
@@ -156,15 +156,15 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-27 13:54:23 北京时间"
+      "fetched_at": "2026-06-28 14:18:59 北京时间"
     },
     {
       "name": "free-nodes",
       "kind": "github_readme",
       "format": "v2ray",
-      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202606272",
+      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202606282",
       "ok": true,
-      "node_count": 631,
+      "node_count": 633,
       "protocols": [
         [
           "hysteria2",
@@ -172,55 +172,55 @@
         ],
         [
           "ss",
-          83
+          87
         ],
         [
           "trojan",
-          13
+          23
         ],
         [
           "vless",
-          460
+          444
         ],
         [
           "vmess",
-          69
+          73
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-27 13:54:23 北京时间"
+      "fetched_at": "2026-06-28 14:18:59 北京时间"
     },
     {
       "name": "nodev2rayn",
       "kind": "github_readme",
       "format": "v2ray",
-      "resolved_url": "https://nodev2rayn.github.io/uploads/2026/06/4-20260621.txt",
+      "resolved_url": "https://nodev2rayn.github.io/uploads/2026/06/4-20260628.txt",
       "ok": true,
-      "node_count": 433,
+      "node_count": 595,
       "protocols": [
         [
           "hysteria2",
-          47
+          8
         ],
         [
           "ss",
-          48
+          75
         ],
         [
           "trojan",
-          24
+          12
         ],
         [
           "vless",
-          289
+          435
         ],
         [
           "vmess",
-          25
+          65
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-27 13:54:23 北京时间"
+      "fetched_at": "2026-06-28 14:18:59 北京时间"
     },
     {
       "name": "vovaplus-vless",
@@ -228,15 +228,15 @@
       "format": "v2ray",
       "resolved_url": "https://raw.githubusercontent.com/VovaplusEXP/p-configs/main/Splitted-By-Protocol-Base64/vless.txt",
       "ok": true,
-      "node_count": 139,
+      "node_count": 128,
       "protocols": [
         [
           "vless",
-          139
+          128
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-27 13:54:24 北京时间"
+      "fetched_at": "2026-06-28 14:19:00 北京时间"
     },
     {
       "name": "vovaplus-vmess",
@@ -252,7 +252,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-27 13:54:24 北京时间"
+      "fetched_at": "2026-06-28 14:19:00 北京时间"
     },
     {
       "name": "vovaplus-ss",
@@ -260,15 +260,15 @@
       "format": "v2ray",
       "resolved_url": "https://raw.githubusercontent.com/VovaplusEXP/p-configs/main/Splitted-By-Protocol-Base64/ss.txt",
       "ok": true,
-      "node_count": 11,
+      "node_count": 7,
       "protocols": [
         [
           "ss",
-          11
+          7
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-27 13:54:24 北京时间"
+      "fetched_at": "2026-06-28 14:19:00 北京时间"
     },
     {
       "name": "vovaplus-trojan",
@@ -276,15 +276,15 @@
       "format": "v2ray",
       "resolved_url": "https://raw.githubusercontent.com/VovaplusEXP/p-configs/main/Splitted-By-Protocol-Base64/trojan.txt",
       "ok": true,
-      "node_count": 10,
+      "node_count": 24,
       "protocols": [
         [
           "trojan",
-          10
+          24
         ]
       ],
       "error": null,
-      "fetched_at": "2026-06-27 13:54:24 北京时间"
+      "fetched_at": "2026-06-28 14:19:00 北京时间"
     }
   ]
 }
