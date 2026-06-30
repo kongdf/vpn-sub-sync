@@ -27,13 +27,15 @@ pub fn rename_v2ray_tagged(
             .collect();
     }
 
+    let first_name = generate_first_name(&cfg.first_name);
+
     let mut used = HashSet::new();
     nodes
         .iter()
         .enumerate()
         .map(|(i, tagged)| {
             let base = if i == 0 {
-                cfg.first_name.clone()
+                first_name.clone()
             } else {
                 build_name(cfg, &tagged.node, &tagged.source, i + 1, probe_cache)
             };
@@ -44,6 +46,11 @@ pub fn rename_v2ray_tagged(
             )
         })
         .collect()
+}
+
+fn generate_first_name(base: &str) -> String {
+    let now = chrono::Local::now();
+    format!("{:02}-{:02}-{}", now.month(), now.day(), base)
 }
 
 pub fn rename_v2ray_nodes(

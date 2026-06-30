@@ -1,6 +1,3 @@
-# 订阅源配置：增删源只需改此文件，无需改代码
-# kind: direct = 直链 | github_readme = 从仓库 README 解析订阅 URL
-
 [probe]
 enabled = true
 timeout_secs = 3
@@ -13,42 +10,12 @@ drop_unparsed = true
 
 [naming]
 enabled = true
-# 首个 v2ray 节点使用 first_name，其余节点按 template 命名
-# 可用变量：{source} {country} {latency} {proto} {host} {port} {index}
-first_name = "孔大夫-我做个艺术家"
+first_name = "孔大夫"
 template = "{source}-{country}-{latency}"
 tag_source = true
 
 [[source]]
-name = "Au1rxx"
-kind = "direct"
-url = "https://github.com/Au1rxx/free-vpn-subscriptions/raw/main/output/v2ray-base64.txt"
-format = "v2ray"
-enabled = true
-
-[[source]]
-name = "DaBao-Lee"
-kind = "direct"
-url = "https://raw.githubusercontent.com/DaBao-Lee/V2RayN-NodeShare/main/base64"
-format = "v2ray"
-enabled = true
-
-[[source]]
-name = "ripaojiedian"
-kind = "direct"
-url = "https://raw.githubusercontent.com/ripaojiedian/freenode/main/sub"
-format = "v2ray"
-enabled = true
-
-[[source]]
-name = "chengaopan"
-kind = "direct"
-url = "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/master/list.txt"
-format = "v2ray"
-enabled = true
-
-[[source]]
-name = "xrayvip-v2ray"
+name = "xrayvip"
 kind = "direct"
 url = "https://www.xrayvip.com/free.txt"
 format = "v2ray"
@@ -71,48 +38,3 @@ branch = "main"
 url_pattern = 'https://nodev2rayn\.github\.io/uploads/\d{4}/\d{2}/\d+-[\d]+\.txt'
 format = "v2ray"
 enabled = true
-
-[[source]]
-name = "vovaplus-vless"
-kind = "direct"
-url = "https://raw.githubusercontent.com/VovaplusEXP/p-configs/main/Splitted-By-Protocol-Base64/vless.txt"
-format = "v2ray"
-enabled = true
-
-[[source]]
-name = "vovaplus-vmess"
-kind = "direct"
-url = "https://raw.githubusercontent.com/VovaplusEXP/p-configs/main/Splitted-By-Protocol-Base64/vmess.txt"
-format = "v2ray"
-enabled = true
-
-[[source]]
-name = "vovaplus-ss"
-kind = "direct"
-url = "https://raw.githubusercontent.com/VovaplusEXP/p-configs/main/Splitted-By-Protocol-Base64/ss.txt"
-format = "v2ray"
-enabled = true
-
-[[source]]
-name = "vovaplus-trojan"
-kind = "direct"
-url = "https://raw.githubusercontent.com/VovaplusEXP/p-configs/main/Splitted-By-Protocol-Base64/trojan.txt"
-format = "v2ray"
-enabled = true
-
-# --- Clash 格式（可选）---
-# 上次同步 Clash 代理数 0（探测后无可达节点），暂时关闭以加快同步
-
-[[source]]
-name = "xrayvip-clash"
-kind = "direct"
-url = "https://www.xrayvip.com/free.yaml"
-format = "clash"
-enabled = false
-
-[[source]]
-name = "anaer-clash"
-kind = "direct"
-url = "https://raw.githubusercontent.com/anaer/Sub/main/clash.yaml"
-format = "clash"
-enabled = false
