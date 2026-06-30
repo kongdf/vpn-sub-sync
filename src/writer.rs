@@ -47,12 +47,32 @@ pub struct SourceReport {
 }
 
 #[derive(Debug, Serialize)]
+pub struct NamingReport {
+    pub enabled: bool,
+    pub template: String,
+    pub first_name: String,
+    pub tag_source: bool,
+}
+
+#[derive(Debug, Serialize)]
+pub struct FilterReport {
+    pub dedupe_endpoint: bool,
+    pub max_latency_ms: Option<u32>,
+    pub max_nodes: Option<usize>,
+    pub drop_unparsed: bool,
+}
+
+#[derive(Debug, Serialize)]
 pub struct SyncReport {
     pub synced_at: String,
     pub v2ray_total_nodes: usize,
     pub clash_proxy_count: usize,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub probe: Option<ProbeReport>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub filter: Option<FilterReport>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub naming: Option<NamingReport>,
     pub sources: Vec<SourceReport>,
 }
 
@@ -93,6 +113,9 @@ impl Writer {
     }
 }
 
+const REPO_RAW_BASE: &str =
+    "https://raw.githubusercontent.com/kongdf/vpn-sub-sync/main/output";
+
 fn render_readme(report: &SyncReport, v2ray_b64: &str, clash_yaml: &str) -> String {
     let mut md = String::new();
     md.push_str("# VPN Subscription Output\n\n");
@@ -103,11 +126,72 @@ fn render_readme(report: &SyncReport, v2ray_b64: &str, clash_yaml: &str) -> Stri
         report.v2ray_total_nodes, report.clash_proxy_count
     ));
 
+    md.push_str("## 订阅链接\n\n");
+    if !v2ray_b64.is_empty() {
+        md.push_str("- v2rayN / v2rayNG：\n");
+        md.push_str(&format!("  `{REPO_RAW_BASE}/v2ray.txt`\n\n"));
+    }
+    if !clash_yaml.is_empty() {
+        md.push_str("- Clash / Clash Verge：\n");
+        md.push_str(&format!("  `{REPO_RAW_BASE}/clash.yaml`\n\n"));
+    }
+
+    if let Some(naming) = &report.naming {
+        if naming.enabled || naming.tag_source {
+            md.push_str("## 节点命名\n\n");
+            if naming.enabled {
+                md.push_str(&format!(
+                    "首个节点：`{{MM-DD}}-{}`（如 `06-30-{}`）\n\n",
+                    naming.first_name, naming.first_name
+                ));
+                md.push_str(&format!(
+                    "其余节点：`{}`（如 `xrayvip-韩国-2ms`）\n\n",
+                    naming.template
+                ));
+            } else {
+                md.push_str("按订阅源前缀标记节点名称。\n\n");
+            }
+        }
+    }
+
+    if let Some(filter) = &report.filter {
+        if filter.dedupe_endpoint
+            || filter.max_latency_ms.is_some()
+            || filter.max_nodes.is_some()
+            || filter.drop_unparsed
+        {
+            md.push_str("## 筛选\n\n");
+            if filter.dedupe_endpoint {
+                md.push_str("- 同 host:port 去重\n");
+            }
+            if let Some(ms) = filter.max_latency_ms {
+                md.push_str(&format!("- 延迟超过 {ms}ms 剔除\n"));
+            }
+            if filter.drop_unparsed {
+                md.push_str("- 无法解析端点的节点剔除\n");
+            }
+            if let Some(max) = filter.max_nodes {
+                md.push_str(&format!("- 最多保留 {max} 个节点\n"));
+            }
+            md.push('\n');
+        }
+    }
+
     if let Some(probe) = &report.probe {
         md.push_str("## TCP 探测\n\n");
         md.push_str(&format!(
-            "超时 {}s，并发 {}。不可达节点已剔除；无法解析端点的节点保留。\n\n",
-            probe.timeout_secs, probe.concurrency
+            "超时 {}s，并发 {}。不可达节点已剔除；无法解析端点的节点{}。\n\n",
+            probe.timeout_secs,
+            probe.concurrency,
+            if report
+                .filter
+                .as_ref()
+                .is_some_and(|f| f.drop_unparsed)
+            {
+                "剔除"
+            } else {
+                "保留"
+            }
         ));
         md.push_str("| 类型 | 探测前 | 保留 | 可达 | 不可达 | 未解析 |\n");
         md.push_str("|---|---|---|---|---|---|\n");
@@ -127,17 +211,6 @@ fn render_readme(report: &SyncReport, v2ray_b64: &str, clash_yaml: &str) -> Stri
             probe.clash.unreachable,
             probe.clash.unparsed
         ));
-    }
-
-    md.push_str("## 订阅链接\n\n");
-    md.push_str("将 `YOUR_USER/YOUR_REPO` 替换为你的 GitHub 仓库路径：\n\n");
-    if !v2ray_b64.is_empty() {
-        md.push_str("- v2rayN / v2rayNG：\n");
-        md.push_str("  `https://raw.githubusercontent.com/YOUR_USER/YOUR_REPO/main/output/v2ray.txt`\n\n");
-    }
-    if !clash_yaml.is_empty() {
-        md.push_str("- Clash / Clash Verge：\n");
-        md.push_str("  `https://raw.githubusercontent.com/YOUR_USER/YOUR_REPO/main/output/clash.yaml`\n\n");
     }
 
     md.push_str("## 各源状态\n\n");

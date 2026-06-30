@@ -15,7 +15,10 @@ use fetcher::Fetcher;
 use filter::{FilterConfig, FilterStats};
 use naming::NamingConfig;
 use probe::{ProbeCache, ProbeConfig, ProbeStats};
-use writer::{now_iso, output_path, ProbeKindReport, ProbeReport, SourceReport, SyncReport, Writer};
+use writer::{
+    now_iso, output_path, FilterReport, NamingReport, ProbeKindReport, ProbeReport, SourceReport,
+    SyncReport, Writer,
+};
 
 use tag::{TaggedChunk, TaggedNode};
 
@@ -163,11 +166,35 @@ async fn main() -> Result<()> {
         clash_yaml.matches("\n  - ").count()
     };
 
+    let filter_report = if filter_cfg.enabled() {
+        Some(FilterReport {
+            dedupe_endpoint: filter_cfg.dedupe_endpoint,
+            max_latency_ms: filter_cfg.max_latency_ms,
+            max_nodes: filter_cfg.max_nodes,
+            drop_unparsed: filter_cfg.drop_unparsed,
+        })
+    } else {
+        None
+    };
+
+    let naming_report = if naming_cfg.enabled || naming_cfg.tag_source {
+        Some(NamingReport {
+            enabled: naming_cfg.enabled,
+            template: naming_cfg.template.clone(),
+            first_name: naming_cfg.first_name.clone(),
+            tag_source: naming_cfg.tag_source,
+        })
+    } else {
+        None
+    };
+
     let report = SyncReport {
         synced_at: now_iso(),
         v2ray_total_nodes: merged_stats.nodes.len(),
         clash_proxy_count: clash_count,
         probe: probe_report,
+        filter: filter_report,
+        naming: naming_report,
         sources: reports,
     };
 

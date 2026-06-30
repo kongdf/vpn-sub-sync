@@ -6,34 +6,36 @@
 
 **v2ray 节点总数：** 533 | **Clash 代理数：** 0
 
+## 订阅链接
+
+- v2rayN / v2rayNG：
+  `https://raw.githubusercontent.com/kongdf/vpn-sub-sync/main/output/v2ray.txt`
+
+## 节点命名
+
+首个节点：`{MM-DD}-孔大夫`（如 `06-30-孔大夫`）
+
+其余节点：`{source}-{country}-{latency}`（如 `xrayvip-韩国-2ms`）
+
+## 筛选
+
+- 同 host:port 去重
+- 延迟超过 3000ms 剔除
+- 无法解析端点的节点剔除
+
 ## TCP 探测
 
-超时 3s，并发 50。不可达节点已剔除；无法解析端点的节点保留。
+超时 3s，并发 50。不可达节点已剔除；无法解析端点的节点剔除。
 
 | 类型 | 探测前 | 保留 | 可达 | 不可达 | 未解析 |
 |---|---|---|---|---|---|
 | v2ray | 1730 | 898 | 873 | 832 | 25 |
 | clash | 0 | 0 | 0 | 0 | 0 |
 
-## 订阅链接
-
-将 `YOUR_USER/YOUR_REPO` 替换为你的 GitHub 仓库路径：
-
-- v2rayN / v2rayNG：
-  `https://raw.githubusercontent.com/YOUR_USER/YOUR_REPO/main/output/v2ray.txt`
-
 ## 各源状态
 
 | 源 | 状态 | 节点数 | 说明 |
 |---|---|---|---|
-| Au1rxx | ✅ | 104 | - |
-| DaBao-Lee | ✅ | 126 | - |
-| ripaojiedian | ✅ | 14 | - |
-| chengaopan | ✅ | 55 | - |
-| xrayvip-v2ray | ✅ | 22 | - |
+| xrayvip | ✅ | 22 | - |
 | free-nodes | ✅ | 636 | - |
 | nodev2rayn | ✅ | 595 | - |
-| vovaplus-vless | ✅ | 115 | - |
-| vovaplus-vmess | ✅ | 1 | - |
-| vovaplus-ss | ✅ | 6 | - |
-| vovaplus-trojan | ✅ | 56 | - |
