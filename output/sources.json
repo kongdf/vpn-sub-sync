@@ -1,16 +1,16 @@
 {
-  "synced_at": "2026-07-02 14:00:14 北京时间",
-  "v2ray_total_nodes": 300,
+  "synced_at": "2026-07-03 13:54:09 北京时间",
+  "v2ray_total_nodes": 310,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
     "timeout_secs": 3,
     "concurrency": 50,
     "v2ray": {
-      "before": 1300,
-      "after": 498,
-      "reachable": 497,
-      "unreachable": 802,
+      "before": 1297,
+      "after": 507,
+      "reachable": 506,
+      "unreachable": 790,
       "unparsed": 1
     },
     "clash": {
@@ -40,55 +40,55 @@
       "format": "v2ray",
       "resolved_url": "https://www.xrayvip.com/free.txt",
       "ok": true,
-      "node_count": 18,
+      "node_count": 20,
       "protocols": [
         [
           "ss",
-          4
+          2
         ],
         [
           "trojan",
-          4
+          2
         ],
         [
           "vless",
-          10
+          16
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-02 13:59:40 北京时间"
+      "fetched_at": "2026-07-03 13:53:35 北京时间"
     },
     {
       "name": "free-nodes",
       "kind": "github_readme",
       "format": "v2ray",
-      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202607022",
+      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202607032",
       "ok": true,
-      "node_count": 687,
+      "node_count": 682,
       "protocols": [
         [
           "hysteria2",
-          11
+          13
         ],
         [
           "ss",
-          93
+          96
         ],
         [
           "trojan",
-          12
+          11
         ],
         [
           "vless",
-          483
+          468
         ],
         [
           "vmess",
-          88
+          94
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-02 13:59:40 北京时间"
+      "fetched_at": "2026-07-03 13:53:35 北京时间"
     },
     {
       "name": "nodev2rayn",
@@ -120,7 +120,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-02 13:59:40 北京时间"
+      "fetched_at": "2026-07-03 13:53:35 北京时间"
     }
   ]
 }
