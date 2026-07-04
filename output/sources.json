@@ -1,16 +1,16 @@
 {
-  "synced_at": "2026-07-03 13:54:09 北京时间",
-  "v2ray_total_nodes": 310,
+  "synced_at": "2026-07-04 13:46:45 北京时间",
+  "v2ray_total_nodes": 298,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
     "timeout_secs": 3,
     "concurrency": 50,
     "v2ray": {
-      "before": 1297,
-      "after": 507,
-      "reachable": 506,
-      "unreachable": 790,
+      "before": 1274,
+      "after": 489,
+      "reachable": 488,
+      "unreachable": 785,
       "unparsed": 1
     },
     "clash": {
@@ -40,11 +40,11 @@
       "format": "v2ray",
       "resolved_url": "https://www.xrayvip.com/free.txt",
       "ok": true,
-      "node_count": 20,
+      "node_count": 11,
       "protocols": [
         [
           "ss",
-          2
+          4
         ],
         [
           "trojan",
@@ -52,43 +52,43 @@
         ],
         [
           "vless",
-          16
+          5
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-03 13:53:35 北京时间"
+      "fetched_at": "2026-07-04 13:46:11 北京时间"
     },
     {
       "name": "free-nodes",
       "kind": "github_readme",
       "format": "v2ray",
-      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202607032",
+      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202607042",
       "ok": true,
-      "node_count": 682,
+      "node_count": 668,
       "protocols": [
         [
           "hysteria2",
-          13
-        ],
-        [
-          "ss",
-          96
-        ],
-        [
-          "trojan",
           11
         ],
         [
+          "ss",
+          98
+        ],
+        [
+          "trojan",
+          12
+        ],
+        [
           "vless",
-          468
+          451
         ],
         [
           "vmess",
-          94
+          96
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-03 13:53:35 北京时间"
+      "fetched_at": "2026-07-04 13:46:11 北京时间"
     },
     {
       "name": "nodev2rayn",
@@ -120,7 +120,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-03 13:53:35 北京时间"
+      "fetched_at": "2026-07-04 13:46:11 北京时间"
     }
   ]
 }
