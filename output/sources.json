@@ -1,16 +1,16 @@
 {
-  "synced_at": "2026-07-09 14:06:16 北京时间",
-  "v2ray_total_nodes": 221,
+  "synced_at": "2026-07-10 14:05:26 北京时间",
+  "v2ray_total_nodes": 240,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
     "timeout_secs": 3,
     "concurrency": 50,
     "v2ray": {
-      "before": 795,
-      "after": 279,
-      "reachable": 278,
-      "unreachable": 516,
+      "before": 788,
+      "after": 300,
+      "reachable": 299,
+      "unreachable": 488,
       "unparsed": 1
     },
     "clash": {
@@ -40,59 +40,55 @@
       "format": "v2ray",
       "resolved_url": "https://www.xrayvip.com/free.txt",
       "ok": true,
-      "node_count": 19,
+      "node_count": 9,
       "protocols": [
         [
           "ss",
-          4
+          2
         ],
         [
           "trojan",
-          9
+          2
         ],
         [
           "vless",
-          4
-        ],
-        [
-          "vmess",
-          2
+          5
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-09 14:05:42 北京时间"
+      "fetched_at": "2026-07-10 14:04:50 北京时间"
     },
     {
       "name": "free-nodes",
       "kind": "github_readme",
       "format": "v2ray",
-      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202607092",
+      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202607102",
       "ok": true,
-      "node_count": 776,
+      "node_count": 779,
       "protocols": [
         [
           "hysteria2",
-          15
+          16
         ],
         [
           "ss",
-          107
+          112
         ],
         [
           "trojan",
-          52
+          8
         ],
         [
           "vless",
-          486
+          519
         ],
         [
           "vmess",
-          116
+          124
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-09 14:05:42 北京时间"
+      "fetched_at": "2026-07-10 14:04:50 北京时间"
     },
     {
       "name": "nodev2rayn",
@@ -103,7 +99,7 @@
       "node_count": 0,
       "protocols": [],
       "error": "HTTP 404 Not Found for https://nodev2rayn.github.io/uploads/2026/07/4-20260705.txt",
-      "fetched_at": "2026-07-09 14:05:42 北京时间"
+      "fetched_at": "2026-07-10 14:04:50 北京时间"
     }
   ]
 }
