@@ -1,16 +1,16 @@
 {
-  "synced_at": "2026-07-14 12:52:27 北京时间",
-  "v2ray_total_nodes": 311,
+  "synced_at": "2026-07-15 12:52:45 北京时间",
+  "v2ray_total_nodes": 314,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
     "timeout_secs": 3,
     "concurrency": 50,
     "v2ray": {
-      "before": 960,
-      "after": 403,
-      "reachable": 401,
-      "unreachable": 557,
+      "before": 946,
+      "after": 406,
+      "reachable": 404,
+      "unreachable": 540,
       "unparsed": 2
     },
     "clash": {
@@ -40,51 +40,59 @@
       "format": "v2ray",
       "resolved_url": "https://www.xrayvip.com/free.txt",
       "ok": true,
-      "node_count": 23,
+      "node_count": 16,
       "protocols": [
         [
+          "ss",
+          3
+        ],
+        [
           "trojan",
-          5
+          4
         ],
         [
           "vless",
-          18
+          8
+        ],
+        [
+          "vmess",
+          1
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-14 12:51:53 北京时间"
+      "fetched_at": "2026-07-15 12:52:11 北京时间"
     },
     {
       "name": "free-nodes",
       "kind": "github_readme",
       "format": "v2ray",
-      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202607142",
+      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202607152",
       "ok": true,
-      "node_count": 937,
+      "node_count": 930,
       "protocols": [
         [
           "hysteria2",
-          5
+          1
         ],
         [
           "ss",
-          118
+          117
         ],
         [
           "trojan",
-          12
+          37
         ],
         [
           "vless",
-          628
+          589
         ],
         [
           "vmess",
-          174
+          186
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-14 12:51:53 北京时间"
+      "fetched_at": "2026-07-15 12:52:11 北京时间"
     },
     {
       "name": "nodev2rayn",
@@ -95,7 +103,7 @@
       "node_count": 0,
       "protocols": [],
       "error": "no valid nodes found",
-      "fetched_at": "2026-07-14 12:51:54 北京时间"
+      "fetched_at": "2026-07-15 12:52:11 北京时间"
     }
   ]
 }
