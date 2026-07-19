@@ -1,17 +1,17 @@
 {
-  "synced_at": "2026-07-18 12:49:54 北京时间",
-  "v2ray_total_nodes": 350,
+  "synced_at": "2026-07-19 13:23:15 北京时间",
+  "v2ray_total_nodes": 395,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
     "timeout_secs": 3,
     "concurrency": 50,
     "v2ray": {
-      "before": 1002,
-      "after": 443,
-      "reachable": 441,
-      "unreachable": 559,
-      "unparsed": 2
+      "before": 1994,
+      "after": 801,
+      "reachable": 797,
+      "unreachable": 1193,
+      "unparsed": 4
     },
     "clash": {
       "before": 0,
@@ -40,7 +40,7 @@
       "format": "v2ray",
       "resolved_url": "https://www.xrayvip.com/free.txt",
       "ok": true,
-      "node_count": 25,
+      "node_count": 29,
       "protocols": [
         [
           "ss",
@@ -48,58 +48,75 @@
         ],
         [
           "trojan",
-          3
+          1
         ],
         [
           "vless",
-          16
+          24
         ],
         [
           "vmess",
-          4
+          2
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-18 12:49:20 北京时间"
+      "fetched_at": "2026-07-19 13:22:39 北京时间"
     },
     {
       "name": "free-nodes",
       "kind": "github_readme",
       "format": "v2ray",
-      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202607182",
+      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202607192",
       "ok": true,
-      "node_count": 977,
+      "node_count": 1007,
       "protocols": [
         [
           "ss",
-          150
+          151
         ],
         [
           "trojan",
-          35
+          84
         ],
         [
           "vless",
-          588
+          570
         ],
         [
           "vmess",
-          204
+          202
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-18 12:49:20 北京时间"
+      "fetched_at": "2026-07-19 13:22:39 北京时间"
     },
     {
       "name": "nodev2rayn",
       "kind": "github_readme",
       "format": "v2ray",
-      "resolved_url": "https://nodev2rayn.github.io/uploads/2026/07/4-20260712.txt",
-      "ok": false,
-      "node_count": 0,
-      "protocols": [],
-      "error": "no valid nodes found",
-      "fetched_at": "2026-07-18 12:49:20 北京时间"
+      "resolved_url": "https://nodev2rayn.github.io/uploads/2026/07/4-20260719.txt",
+      "ok": true,
+      "node_count": 958,
+      "protocols": [
+        [
+          "ss",
+          141
+        ],
+        [
+          "trojan",
+          68
+        ],
+        [
+          "vless",
+          556
+        ],
+        [
+          "vmess",
+          193
+        ]
+      ],
+      "error": null,
+      "fetched_at": "2026-07-19 13:22:40 北京时间"
     }
   ]
 }
