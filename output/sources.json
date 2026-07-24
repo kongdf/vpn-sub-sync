@@ -1,16 +1,16 @@
 {
-  "synced_at": "2026-07-23 13:26:11 北京时间",
-  "v2ray_total_nodes": 420,
+  "synced_at": "2026-07-24 13:21:42 北京时间",
+  "v2ray_total_nodes": 431,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
     "timeout_secs": 3,
     "concurrency": 50,
     "v2ray": {
-      "before": 2014,
-      "after": 816,
-      "reachable": 812,
-      "unreachable": 1198,
+      "before": 1968,
+      "after": 764,
+      "reachable": 760,
+      "unreachable": 1204,
       "unparsed": 4
     },
     "clash": {
@@ -40,7 +40,7 @@
       "format": "v2ray",
       "resolved_url": "https://www.xrayvip.com/free.txt",
       "ok": true,
-      "node_count": 16,
+      "node_count": 28,
       "protocols": [
         [
           "ss",
@@ -48,39 +48,39 @@
         ],
         [
           "vless",
-          15
+          27
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-23 13:25:39 北京时间"
+      "fetched_at": "2026-07-24 13:21:10 北京时间"
     },
     {
       "name": "free-nodes",
       "kind": "github_readme",
       "format": "v2ray",
-      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202607232",
+      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202607242",
       "ok": true,
-      "node_count": 1040,
+      "node_count": 982,
       "protocols": [
         [
           "ss",
-          160
+          163
         ],
         [
           "trojan",
-          66
+          48
         ],
         [
           "vless",
-          586
+          544
         ],
         [
           "vmess",
-          228
+          227
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-23 13:25:40 北京时间"
+      "fetched_at": "2026-07-24 13:21:10 北京时间"
     },
     {
       "name": "nodev2rayn",
@@ -108,7 +108,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-07-23 13:25:40 北京时间"
+      "fetched_at": "2026-07-24 13:21:10 北京时间"
     }
   ]
 }
