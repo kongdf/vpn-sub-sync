@@ -1,16 +1,16 @@
 {
-  "synced_at": "2026-08-01 13:28:46 北京时间",
-  "v2ray_total_nodes": 531,
+  "synced_at": "2026-08-02 13:28:33 北京时间",
+  "v2ray_total_nodes": 498,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
     "timeout_secs": 3,
     "concurrency": 50,
     "v2ray": {
-      "before": 2290,
-      "after": 1041,
-      "reachable": 1037,
-      "unreachable": 1249,
+      "before": 2607,
+      "after": 1241,
+      "reachable": 1237,
+      "unreachable": 1366,
       "unparsed": 4
     },
     "clash": {
@@ -60,15 +60,15 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-08-01 13:28:09 北京时间"
+      "fetched_at": "2026-08-02 13:27:54 北京时间"
     },
     {
       "name": "free-nodes",
       "kind": "github_readme",
       "format": "v2ray",
-      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202608012",
+      "resolved_url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/v202608022",
       "ok": true,
-      "node_count": 1262,
+      "node_count": 1313,
       "protocols": [
         [
           "hysteria2",
@@ -76,51 +76,55 @@
         ],
         [
           "ss",
-          209
+          225
         ],
         [
           "trojan",
-          11
+          10
         ],
         [
           "vless",
-          615
+          633
         ],
         [
           "vmess",
-          425
+          443
         ]
       ],
       "error": null,
-      "fetched_at": "2026-08-01 13:28:09 北京时间"
+      "fetched_at": "2026-08-02 13:27:54 北京时间"
     },
     {
       "name": "nodev2rayn",
       "kind": "github_readme",
       "format": "v2ray",
-      "resolved_url": "https://nodev2rayn.github.io/uploads/2026/07/4-20260726.txt",
+      "resolved_url": "https://nodev2rayn.github.io/uploads/2026/08/4-20260802.txt",
       "ok": true,
-      "node_count": 977,
+      "node_count": 1243,
       "protocols": [
         [
+          "hysteria2",
+          2
+        ],
+        [
           "ss",
-          163
+          212
         ],
         [
           "trojan",
-          52
+          13
         ],
         [
           "vless",
-          533
+          621
         ],
         [
           "vmess",
-          229
+          395
         ]
       ],
       "error": null,
-      "fetched_at": "2026-08-01 13:28:09 北京时间"
+      "fetched_at": "2026-08-02 13:27:54 北京时间"
     }
   ]
 }
