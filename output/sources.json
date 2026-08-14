@@ -1,16 +1,16 @@
 {
-  "synced_at": "2026-08-13 12:12:48 北京时间",
-  "v2ray_total_nodes": 435,
+  "synced_at": "2026-08-14 12:09:48 北京时间",
+  "v2ray_total_nodes": 433,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
     "timeout_secs": 3,
     "concurrency": 50,
     "v2ray": {
-      "before": 1457,
-      "after": 680,
-      "reachable": 677,
-      "unreachable": 777,
+      "before": 1449,
+      "after": 685,
+      "reachable": 682,
+      "unreachable": 764,
       "unparsed": 3
     },
     "clash": {
@@ -40,27 +40,23 @@
       "format": "v2ray",
       "resolved_url": "https://www.xrayvip.com/free.txt",
       "ok": true,
-      "node_count": 50,
+      "node_count": 42,
       "protocols": [
         [
           "ss",
-          1
+          2
         ],
         [
           "trojan",
-          25
+          17
         ],
         [
           "vless",
           23
-        ],
-        [
-          "vmess",
-          1
         ]
       ],
       "error": null,
-      "fetched_at": "2026-08-13 12:12:13 北京时间"
+      "fetched_at": "2026-08-14 12:09:07 北京时间"
     },
     {
       "name": "free-nodes",
@@ -71,7 +67,7 @@
       "node_count": 0,
       "protocols": [],
       "error": "no subscription URL matched pattern in free-nodes/v2rayfree README",
-      "fetched_at": "2026-08-13 12:12:14 北京时间"
+      "fetched_at": "2026-08-14 12:09:07 北京时间"
     },
     {
       "name": "nodev2rayn",
@@ -103,7 +99,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-08-13 12:12:14 北京时间"
+      "fetched_at": "2026-08-14 12:09:07 北京时间"
     }
   ]
 }
