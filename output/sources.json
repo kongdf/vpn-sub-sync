@@ -1,16 +1,16 @@
 {
-  "synced_at": "2026-09-19 15:05:08 北京时间",
-  "v2ray_total_nodes": 527,
+  "synced_at": "2026-09-20 15:30:17 北京时间",
+  "v2ray_total_nodes": 506,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
     "timeout_secs": 3,
     "concurrency": 50,
     "v2ray": {
-      "before": 1719,
-      "after": 657,
-      "reachable": 655,
-      "unreachable": 1062,
+      "before": 1710,
+      "after": 633,
+      "reachable": 631,
+      "unreachable": 1077,
       "unparsed": 2
     },
     "clash": {
@@ -40,19 +40,19 @@
       "format": "v2ray",
       "resolved_url": "https://www.xrayvip.com/free.txt",
       "ok": true,
-      "node_count": 105,
+      "node_count": 109,
       "protocols": [
         [
           "ss",
-          18
+          1
         ],
         [
           "trojan",
-          74
+          88
         ],
         [
           "vless",
-          12
+          19
         ],
         [
           "vmess",
@@ -60,7 +60,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-09-19 15:04:23 北京时间"
+      "fetched_at": "2026-09-20 15:29:37 北京时间"
     },
     {
       "name": "free-nodes",
@@ -71,39 +71,35 @@
       "node_count": 0,
       "protocols": [],
       "error": "no subscription URL matched pattern in free-nodes/v2rayfree README",
-      "fetched_at": "2026-09-19 15:04:24 北京时间"
+      "fetched_at": "2026-09-20 15:29:37 北京时间"
     },
     {
       "name": "nodev2rayn",
       "kind": "github_readme",
       "format": "v2ray",
-      "resolved_url": "https://nodev2rayn.github.io/uploads/2026/09/4-20260913.txt",
+      "resolved_url": "https://nodev2rayn.github.io/uploads/2026/09/4-20260920.txt",
       "ok": true,
-      "node_count": 1614,
+      "node_count": 1601,
       "protocols": [
         [
-          "hysteria2",
-          2
-        ],
-        [
           "ss",
-          544
+          586
         ],
         [
           "trojan",
-          15
+          14
         ],
         [
           "vless",
-          548
+          460
         ],
         [
           "vmess",
-          505
+          541
         ]
       ],
       "error": null,
-      "fetched_at": "2026-09-19 15:04:24 北京时间"
+      "fetched_at": "2026-09-20 15:29:38 北京时间"
     }
   ]
 }
