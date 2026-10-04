@@ -1,16 +1,16 @@
 {
-  "synced_at": "2026-10-03 15:39:40 北京时间",
-  "v2ray_total_nodes": 150,
+  "synced_at": "2026-10-04 15:49:01 北京时间",
+  "v2ray_total_nodes": 202,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
     "timeout_secs": 3,
     "concurrency": 50,
     "v2ray": {
-      "before": 253,
-      "after": 172,
-      "reachable": 172,
-      "unreachable": 81,
+      "before": 421,
+      "after": 287,
+      "reachable": 287,
+      "unreachable": 134,
       "unparsed": 0
     },
     "clash": {
@@ -40,15 +40,19 @@
       "format": "v2ray",
       "resolved_url": "https://www.xrayvip.com/free.txt",
       "ok": true,
-      "node_count": 42,
+      "node_count": 19,
       "protocols": [
         [
+          "trojan",
+          2
+        ],
+        [
           "vless",
-          42
+          17
         ]
       ],
       "error": null,
-      "fetched_at": "2026-10-03 15:39:33 北京时间"
+      "fetched_at": "2026-10-04 15:48:53 北京时间"
     },
     {
       "name": "free-nodes",
@@ -59,35 +63,35 @@
       "node_count": 0,
       "protocols": [],
       "error": "no subscription URL matched pattern in free-nodes/v2rayfree README",
-      "fetched_at": "2026-10-03 15:39:33 北京时间"
+      "fetched_at": "2026-10-04 15:48:54 北京时间"
     },
     {
       "name": "nodev2rayn",
       "kind": "github_readme",
       "format": "v2ray",
-      "resolved_url": "https://nodev2rayn.github.io/uploads/2026/09/4-20260927.txt",
+      "resolved_url": "https://nodev2rayn.github.io/uploads/2026/10/4-20261004.txt",
       "ok": true,
-      "node_count": 211,
+      "node_count": 402,
       "protocols": [
         [
           "ss",
-          51
+          84
         ],
         [
           "trojan",
-          6
+          3
         ],
         [
           "vless",
-          90
+          185
         ],
         [
           "vmess",
-          64
+          130
         ]
       ],
       "error": null,
-      "fetched_at": "2026-10-03 15:39:33 北京时间"
+      "fetched_at": "2026-10-04 15:48:54 北京时间"
     }
   ]
 }
