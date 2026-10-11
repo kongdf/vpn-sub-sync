@@ -1,17 +1,17 @@
 {
-  "synced_at": "2026-10-10 16:08:55 北京时间",
-  "v2ray_total_nodes": 212,
+  "synced_at": "2026-10-11 16:20:49 北京时间",
+  "v2ray_total_nodes": 276,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
     "timeout_secs": 3,
     "concurrency": 50,
     "v2ray": {
-      "before": 458,
-      "after": 291,
-      "reachable": 291,
-      "unreachable": 167,
-      "unparsed": 0
+      "before": 598,
+      "after": 406,
+      "reachable": 405,
+      "unreachable": 192,
+      "unparsed": 1
     },
     "clash": {
       "before": 0,
@@ -40,23 +40,15 @@
       "format": "v2ray",
       "resolved_url": "https://www.xrayvip.com/free.txt",
       "ok": true,
-      "node_count": 56,
+      "node_count": 40,
       "protocols": [
         [
-          "ss",
-          3
-        ],
-        [
-          "trojan",
-          2
-        ],
-        [
           "vless",
-          51
+          40
         ]
       ],
       "error": null,
-      "fetched_at": "2026-10-10 16:08:45 北京时间"
+      "fetched_at": "2026-10-11 16:20:39 北京时间"
     },
     {
       "name": "free-nodes",
@@ -67,35 +59,35 @@
       "node_count": 0,
       "protocols": [],
       "error": "no subscription URL matched pattern in free-nodes/v2rayfree README",
-      "fetched_at": "2026-10-10 16:08:45 北京时间"
+      "fetched_at": "2026-10-11 16:20:40 北京时间"
     },
     {
       "name": "nodev2rayn",
       "kind": "github_readme",
       "format": "v2ray",
-      "resolved_url": "https://nodev2rayn.github.io/uploads/2026/10/4-20261004.txt",
+      "resolved_url": "https://nodev2rayn.github.io/uploads/2026/10/4-20261011.txt",
       "ok": true,
-      "node_count": 402,
+      "node_count": 558,
       "protocols": [
         [
           "ss",
-          84
+          107
         ],
         [
           "trojan",
-          3
+          56
         ],
         [
           "vless",
-          185
+          205
         ],
         [
           "vmess",
-          130
+          190
         ]
       ],
       "error": null,
-      "fetched_at": "2026-10-10 16:08:45 北京时间"
+      "fetched_at": "2026-10-11 16:20:40 北京时间"
     }
   ]
 }
