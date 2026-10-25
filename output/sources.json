@@ -1,6 +1,6 @@
 {
-  "synced_at": "2026-10-24 14:54:20 北京时间",
-  "v2ray_total_nodes": 336,
+  "synced_at": "2026-10-25 15:18:46 北京时间",
+  "v2ray_total_nodes": 305,
   "clash_proxy_count": 0,
   "probe": {
     "enabled": true,
@@ -8,9 +8,9 @@
     "concurrency": 50,
     "v2ray": {
       "before": 782,
-      "after": 493,
-      "reachable": 493,
-      "unreachable": 289,
+      "after": 449,
+      "reachable": 449,
+      "unreachable": 333,
       "unparsed": 0
     },
     "clash": {
@@ -60,7 +60,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-10-24 14:54:05 北京时间"
+      "fetched_at": "2026-10-25 15:18:30 北京时间"
     },
     {
       "name": "free-nodes",
@@ -71,7 +71,7 @@
       "node_count": 0,
       "protocols": [],
       "error": "no subscription URL matched pattern in free-nodes/v2rayfree README",
-      "fetched_at": "2026-10-24 14:54:05 北京时间"
+      "fetched_at": "2026-10-25 15:18:30 北京时间"
     },
     {
       "name": "nodev2rayn",
@@ -99,7 +99,7 @@
         ]
       ],
       "error": null,
-      "fetched_at": "2026-10-24 14:54:05 北京时间"
+      "fetched_at": "2026-10-25 15:18:30 北京时间"
     }
   ]
 }
